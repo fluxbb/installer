@@ -25,3 +25,8 @@
 
 Route::get('(:bundle)', 'fluxbb_installer::home@start');
 Route::post('(:bundle)/run', 'fluxbb_installer::home@install');
+
+Route::get('(:bundle)/database', function()
+{
+	return View::make('fluxbb_installer::database');
+});
