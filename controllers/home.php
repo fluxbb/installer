@@ -24,7 +24,8 @@
  */
 
 use fluxbb\CLI\TaskRunner,
-	fluxbb\Controllers\Base;
+	fluxbb\Controllers\Base,
+	Laravel\CLI\Command;
 
 class FluxBB_Installer_Home_Controller extends Base
 {
@@ -176,13 +177,18 @@ class FluxBB_Installer_Home_Controller extends Base
 
 	public function post_run()
 	{
-		$installer = new TaskRunner('fluxbb::install');
+		$db = $this->retrieve('db_conf');
+		Command::run(array('fluxbb::install:database', 'mysql', $db['host'], $db['name'], $db['user'].':'.$db['pass'], 'forum_'));
 
-		//if ($installer->run())
-		{
-			return View::make('fluxbb_installer::success')->with('output', $installer->get_output());
-		}
+		Request::set_env('fluxbb');
 
+		Command::run(array('fluxbb::install:structure'));
+		Command::run(array('fluxbb::install:board', $this->retrieve('config.title'), $this->retrieve('config.description')));
+
+		$admin = $this->retrieve('admin');
+		Command::run(array('fluxbb::install:admin', $admin['username'], $admin['password'], $admin['email']));
+
+		return View::make('fluxbb_installer::success')->with('output', 'Success.');
 		// TODO: Dump errors
 	}
 
