@@ -1,7 +1,9 @@
 @layout('fluxbb_installer::layout.main')
 
 @section('main')
-	<h1>Installation successful</h1>
-	<h2>Script output:</h2>
+
+	<h2>Installation successful</h2>
+	<h3>Script output:</h3>
 	<pre>{{ e($output) }}</pre>
+
 @endsection

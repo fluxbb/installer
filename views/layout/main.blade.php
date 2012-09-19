@@ -9,7 +9,9 @@
 
 <div id="flux-install">
 
-@yield('main')
+	<h1>Install FluxBB</h1>
+
+	@yield('main')
 
 </div>
 

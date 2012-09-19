@@ -23,10 +23,5 @@
  * @license		http://www.gnu.org/licenses/gpl.html	GNU General Public License
  */
 
-Route::get('(:bundle)', 'fluxbb_installer::home@start');
-Route::post('(:bundle)/run', 'fluxbb_installer::home@install');
-
-Route::get('(:bundle)/database', function()
-{
-	return View::make('fluxbb_installer::database');
-});
+Route::controller('fluxbb_installer::home');
+Route::any('(:bundle)', 'fluxbb_installer::home@start');

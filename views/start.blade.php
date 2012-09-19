@@ -1,9 +1,14 @@
 @layout('fluxbb_installer::layout.main')
 
 @section('main')
-	<h1>Install FluxBB</h1>
-	<p>Be sure to have setup your database connection information in the file <code>application/config/database.php</code>.</p>
-	<form action="{{ URL::to_action('fluxbb_installer::home@install') }}" method="post">
+
+	<p>This installer is going to guide you through the process.</p>
+	<form action="{{ URL::to_action('fluxbb_installer::home@start') }}" method="POST">
+		<label for="language">Installation language</label>
+		<select name="language" id="language">
+			<option value="en">English</option>
+		</select>
 		<input type="submit" value="Start!" />
 	</form>
+
 @endsection

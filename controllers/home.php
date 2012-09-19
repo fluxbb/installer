@@ -23,23 +23,138 @@
  * @license		http://www.gnu.org/licenses/gpl.html	GNU General Public License
  */
 
-use fluxbb\CLI\TaskRunner;
+use fluxbb\CLI\TaskRunner,
+	fluxbb\Controllers\Base;
 
-class FluxBB_Installer_Home_Controller extends Controller
+class FluxBB_Installer_Home_Controller extends Base
 {
 
-	public $restful = true;
+	public function __construct()
+	{
+		parent::__construct();
+
+		if ($this->has('language'))
+		{
+			Config::set('application.language', $this->retrieve('language'));
+		}
+	}
+
+
+	protected function remember($key, $value)
+	{
+		Session::put('fluxbb.install.'.$key, $value);
+	}
+
+	protected function has($key)
+	{
+		return Session::has('fluxbb.install.'.$key);
+	}
+
+	protected function retrieve($key)
+	{
+		return Session::get('fluxbb.install.'.$key);
+	}
+
 
 	public function get_start()
 	{
 		return View::make('fluxbb_installer::start');
 	}
 
-	public function post_install()
+	public function post_start()
+	{
+		$rules = array(
+			// TODO: Verify language being valid
+			'language'	=> 'required',
+		);
+
+		// TODO: Set bundle (for localization)
+		$validation = $this->make_validator(Input::all(), $rules);
+		if ($validation->fails())
+		{
+			return Redirect::to_action('fluxbb_installer::home@start')->with_input()->with_errors($validation);
+		}
+
+		$this->remember('language', Input::get('language'));
+
+		return Redirect::to_action('fluxbb_installer::home@database');
+	}
+
+	public function get_database()
+	{
+		return View::make('fluxbb_installer::database');
+	}
+
+	public function post_database()
+	{
+		$rules = array(
+			'db_host'	=> 'required',
+			'db_name'	=> 'required',
+			'db_user'	=> 'required',
+		);
+
+		$validation = $this->make_validator(Input::all(), $rules);
+		if ($validation->fails())
+		{
+			return Redirect::to_action('fluxbb_installer::home@database')->with_input()->with_errors($validation);
+		}
+
+		return Redirect::to_action('fluxbb_installer::home@admin');
+	}
+
+	public function get_admin()
+	{
+		return View::make('fluxbb_installer::admin');
+	}
+
+	public function post_admin()
+	{
+		$rules = array(
+			'username'	=> 'required|between:2,25|username_not_guest|no_ip|username_not_reserved|no_bbcode',
+			'email'		=> 'required|email',
+			'password'	=> 'required|min:4|confirmed',
+		);
+
+		$validation = $this->make_validator(Input::all(), $rules);
+		if ($validation->fails())
+		{
+			return Redirect::to_action('fluxbb_installer::home@admin')->with_input()->with_errors($validation);
+		}
+
+		return Redirect::to_action('fluxbb_installer::home@config');
+	}
+
+	public function get_config()
+	{
+		return View::make('fluxbb_installer::config');
+	}
+
+	public function post_config()
+	{
+		$rules = array(
+			'title'			=> 'required',
+			'description'	=> 'required',
+		);
+
+		$validation = $this->make_validator(Input::all(), $rules);
+		if ($validation->fails())
+		{
+			return Redirect::to_action('fluxbb_installer::home@config')->with_input()->with_errors($validation);
+		}
+
+		return Redirect::to_action('fluxbb_installer::home@run');
+	}
+
+	public function get_run()
+	{
+		return View::make('fluxbb_installer::run');
+	}
+
+	public function post_run()
 	{
 		$installer = new TaskRunner('fluxbb::install');
 
-		if ($installer->run())
+		//if ($installer->run())
 		{
 			return View::make('fluxbb_installer::success')->with('output', $installer->get_output());
 		}
