@@ -99,6 +99,15 @@ class FluxBB_Installer_Home_Controller extends Base
 			return Redirect::to_action('fluxbb_installer::home@database')->with_input()->with_errors($validation);
 		}
 
+		$db_conf = array(
+			'host'	=> Input::get('db_host'),
+			'name'	=> Input::get('db_name'),
+			'user'	=> Input::get('db_user'),
+			'pass'	=> Input::get('db_pass'),
+		);
+
+		$this->remember('db_conf', $db_conf);
+
 		return Redirect::to_action('fluxbb_installer::home@admin');
 	}
 
@@ -121,6 +130,14 @@ class FluxBB_Installer_Home_Controller extends Base
 			return Redirect::to_action('fluxbb_installer::home@admin')->with_input()->with_errors($validation);
 		}
 
+		$user_info = array(
+			'username'	=> Input::get('username'),
+			'email'		=> Input::get('email'),
+			'password'	=> Input::get('password'),
+		);
+
+		$this->remember('admin', $user_info);
+
 		return Redirect::to_action('fluxbb_installer::home@config');
 	}
 
@@ -141,6 +158,13 @@ class FluxBB_Installer_Home_Controller extends Base
 		{
 			return Redirect::to_action('fluxbb_installer::home@config')->with_input()->with_errors($validation);
 		}
+
+		$board_info = array(
+			'title'			=> Input::get('title'),
+			'description'	=> Input::get('description'),
+		);
+
+		$this->remember('config', $board_info);
 
 		return Redirect::to_action('fluxbb_installer::home@run');
 	}
