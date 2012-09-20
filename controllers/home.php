@@ -177,16 +177,14 @@ class FluxBB_Installer_Home_Controller extends Base
 	public function post_run()
 	{
 		$db = $this->retrieve('db_conf');
-		Command::run(array('fluxbb::install:database', 'mysql', $db['host'], $db['name'], $db['user'].':'.$db['pass'], 'forum_'));
+		Command::run(array('fluxbb::install:config', 'mysql', $db['host'], $db['name'], $db['user'].':'.$db['pass'], 'forum_'));
 
 		Request::set_env('fluxbb');
 
-		Command::run(array('fluxbb::install:structure'));
-		Command::run(array('fluxbb::install:config'));
+		Command::run(array('fluxbb::install:database'));
 		Command::run(array('fluxbb::install:board', $this->retrieve('config.title'), $this->retrieve('config.description')));
 
 		$admin = $this->retrieve('admin');
-		Command::run(array('fluxbb::install:groups'));
 		Command::run(array('fluxbb::install:admin', $admin['username'], $admin['password'], $admin['email']));
 
 		return View::make('fluxbb_installer::success')->with('output', 'Success.');
