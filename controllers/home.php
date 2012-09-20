@@ -23,8 +23,7 @@
  * @license		http://www.gnu.org/licenses/gpl.html	GNU General Public License
  */
 
-use fluxbb\CLI\TaskRunner,
-	fluxbb\Controllers\Base,
+use fluxbb\Controllers\Base,
 	Laravel\CLI\Command;
 
 class FluxBB_Installer_Home_Controller extends Base
