@@ -24,7 +24,7 @@
 	},
 	"autoload": {
 		"psr-0": {
-			"FluxBB\\Installer": "src/FluxBB/Installer"
+			"FluxBB\\Installer": "src"
 		}
 	},
 	"minimum-stability": "dev"
