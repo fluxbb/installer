@@ -23,10 +23,11 @@
  * @license		http://www.gnu.org/licenses/gpl.html	GNU General Public License
  */
 
-use fluxbb\Controllers\Base,
-	Laravel\CLI\Command;
+namespace FluxBB\Installer\Controllers;
 
-class FluxBB_Installer_Home_Controller extends Base
+use FluxBB\Core\Controllers\Base; // TODO: Include Laravel Command
+
+class Home extends Base
 {
 
 	public function __construct()
@@ -35,30 +36,30 @@ class FluxBB_Installer_Home_Controller extends Base
 
 		if ($this->has('language'))
 		{
-			Config::set('application.language', $this->retrieve('language'));
+			\Config::set('application.language', $this->retrieve('language'));
 		}
 	}
 
 
 	protected function remember($key, $value)
 	{
-		Session::put('fluxbb.install.'.$key, $value);
+		\Session::put('fluxbb.install.'.$key, $value);
 	}
 
 	protected function has($key)
 	{
-		return Session::has('fluxbb.install.'.$key);
+		return \Session::has('fluxbb.install.'.$key);
 	}
 
 	protected function retrieve($key)
 	{
-		return Session::get('fluxbb.install.'.$key);
+		return \Session::get('fluxbb.install.'.$key);
 	}
 
 
 	public function get_start()
 	{
-		return View::make('fluxbb_installer::start');
+		return \View::make('fluxbb_installer::start');
 	}
 
 	public function post_start()
@@ -69,20 +70,20 @@ class FluxBB_Installer_Home_Controller extends Base
 		);
 
 		// TODO: Set bundle (for localization)
-		$validation = $this->make_validator(Input::all(), $rules);
+		$validation = $this->make_validator(\Input::all(), $rules);
 		if ($validation->fails())
 		{
-			return Redirect::to_action('fluxbb_installer::home@start')->with_input()->with_errors($validation);
+			return \Redirect::action('fluxbb_installer::home@start')->withInput()->withErrors($validation);
 		}
 
-		$this->remember('language', Input::get('language'));
+		$this->remember('language', \Input::get('language'));
 
-		return Redirect::to_action('fluxbb_installer::home@database');
+		return \Redirect::action('fluxbb_installer::home@database');
 	}
 
 	public function get_database()
 	{
-		return View::make('fluxbb_installer::database');
+		return \View::make('fluxbb_installer::database');
 	}
 
 	public function post_database()
@@ -93,27 +94,27 @@ class FluxBB_Installer_Home_Controller extends Base
 			'db_user'	=> 'required',
 		);
 
-		$validation = $this->make_validator(Input::all(), $rules);
+		$validation = $this->make_validator(\Input::all(), $rules);
 		if ($validation->fails())
 		{
-			return Redirect::to_action('fluxbb_installer::home@database')->with_input()->with_errors($validation);
+			return \Redirect::action('fluxbb_installer::home@database')->withInput()->withErrors($validation);
 		}
 
 		$db_conf = array(
-			'host'	=> Input::get('db_host'),
-			'name'	=> Input::get('db_name'),
-			'user'	=> Input::get('db_user'),
-			'pass'	=> Input::get('db_pass'),
+			'host'	=> \Input::get('db_host'),
+			'name'	=> \Input::get('db_name'),
+			'user'	=> \Input::get('db_user'),
+			'pass'	=> \Input::get('db_pass'),
 		);
 
 		$this->remember('db_conf', $db_conf);
 
-		return Redirect::to_action('fluxbb_installer::home@admin');
+		return \Redirect::action('fluxbb_installer::home@admin');
 	}
 
 	public function get_admin()
 	{
-		return View::make('fluxbb_installer::admin');
+		return \View::make('fluxbb_installer::admin');
 	}
 
 	public function post_admin()
@@ -124,26 +125,26 @@ class FluxBB_Installer_Home_Controller extends Base
 			'password'	=> 'required|min:4|confirmed',
 		);
 
-		$validation = $this->make_validator(Input::all(), $rules);
+		$validation = $this->make_validator(\Input::all(), $rules);
 		if ($validation->fails())
 		{
-			return Redirect::to_action('fluxbb_installer::home@admin')->with_input()->with_errors($validation);
+			return \Redirect::action('fluxbb_installer::home@admin')->withInput()->withErrors($validation);
 		}
 
 		$user_info = array(
-			'username'	=> Input::get('username'),
-			'email'		=> Input::get('email'),
-			'password'	=> Input::get('password'),
+			'username'	=> \Input::get('username'),
+			'email'		=> \Input::get('email'),
+			'password'	=> \Input::get('password'),
 		);
 
 		$this->remember('admin', $user_info);
 
-		return Redirect::to_action('fluxbb_installer::home@config');
+		return \Redirect::action('fluxbb_installer::home@config');
 	}
 
 	public function get_config()
 	{
-		return View::make('fluxbb_installer::config');
+		return \View::make('fluxbb_installer::config');
 	}
 
 	public function post_config()
@@ -153,41 +154,41 @@ class FluxBB_Installer_Home_Controller extends Base
 			'description'	=> 'required',
 		);
 
-		$validation = $this->make_validator(Input::all(), $rules);
+		$validation = $this->make_validator(\Input::all(), $rules);
 		if ($validation->fails())
 		{
-			return Redirect::to_action('fluxbb_installer::home@config')->with_input()->with_errors($validation);
+			return \Redirect::to_action('fluxbb_installer::home@config')->withInput()->withErrors($validation);
 		}
 
 		$board_info = array(
-			'title'			=> Input::get('title'),
-			'description'	=> Input::get('description'),
+			'title'			=> \Input::get('title'),
+			'description'	=> \Input::get('description'),
 		);
 
 		$this->remember('config', $board_info);
 
-		return Redirect::to_action('fluxbb_installer::home@run');
+		return \Redirect::action('fluxbb_installer::home@run');
 	}
 
 	public function get_run()
 	{
-		return View::make('fluxbb_installer::run');
+		return \View::make('fluxbb_installer::run');
 	}
 
 	public function post_run()
 	{
 		$db = $this->retrieve('db_conf');
-		Command::run(array('fluxbb::install:config', 'mysql', $db['host'], $db['name'], $db['user'].':'.$db['pass'], 'forum_'));
+		\Command::run(array('fluxbb::install:config', 'mysql', $db['host'], $db['name'], $db['user'].':'.$db['pass'], 'forum_'));
 
-		Request::set_env('fluxbb');
+		\Request::set_env('fluxbb');
 
-		Command::run(array('fluxbb::install:database'));
-		Command::run(array('fluxbb::install:board', $this->retrieve('config.title'), $this->retrieve('config.description')));
+		\Command::run(array('fluxbb::install:database'));
+		\Command::run(array('fluxbb::install:board', $this->retrieve('config.title'), $this->retrieve('config.description')));
 
 		$admin = $this->retrieve('admin');
-		Command::run(array('fluxbb::install:admin', $admin['username'], $admin['password'], $admin['email']));
+		\Command::run(array('fluxbb::install:admin', $admin['username'], $admin['password'], $admin['email']));
 
-		return View::make('fluxbb_installer::success')->with('output', 'Success.');
+		return \View::make('fluxbb_installer::success')->with('output', 'Success.');
 		// TODO: Dump errors
 	}
 
