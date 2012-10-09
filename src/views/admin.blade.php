@@ -1,4 +1,4 @@
-@layout('fluxbb_installer::layout.main')
+@extends('fluxbb_installer::layout.main')
 
 @section('main')
 
@@ -18,4 +18,4 @@
 		<input type="submit" value="Weiter" />
 	</form>
 
-@endsection
+@stop

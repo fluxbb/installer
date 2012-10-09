@@ -1,4 +1,4 @@
-@layout('fluxbb_installer::layout.main')
+@extends('fluxbb_installer::layout.main')
 
 @section('main')
 
@@ -11,4 +11,4 @@
 		<pre><?php print_r(Session::get('fluxbb.install')); ?></pre>
 	</form>
 
-@endsection
+@stop

@@ -1,4 +1,4 @@
-@layout('fluxbb_installer::layout.main')
+@extends('fluxbb_installer::layout.main')
 
 @section('main')
 
@@ -6,4 +6,4 @@
 	<h3>Script output:</h3>
 	<pre>{{ e($output) }}</pre>
 
-@endsection
+@stop
