@@ -26,6 +26,7 @@
 namespace FluxBB\Installer;
 
 use FluxBB\Controllers\Base;
+use Config;
 use DB;
 use Input;
 use Redirect;
@@ -188,6 +189,7 @@ class Controller extends Base
 		$installer->writeDatabaseConfig($db);
 
 		// Tell the database to use this connection
+		Config::set('database.connections.fluxbb', Config::get('fluxbb.database'));
 		DB::setDefaultConnection('fluxbb');
 
 		$installer->createDatabaseTables();
