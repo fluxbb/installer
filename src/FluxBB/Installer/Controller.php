@@ -110,7 +110,7 @@ class Controller extends Base
 			'password'	=> Input::get('db_pass'),
 			'charset'	=> 'utf8',
 			'collation'	=> 'utf8_unicode_ci',
-			'prefix'	=> '',
+			'prefix'	=> Input::get('db_prefix'),
 		);
 
 		$this->remember('db_conf', $db_conf);

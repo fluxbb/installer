@@ -16,6 +16,9 @@
 		<br>
 		<label>Password</label>
 		<input type="password" name="db_pass" />
+		<br>
+		<label>Table prefix</label>
+		<input type="text" name="db_prefix" />
 		<br><br>
 		<input type="submit" value="Weiter" />
 	</form>
