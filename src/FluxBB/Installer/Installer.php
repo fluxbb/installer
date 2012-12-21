@@ -25,6 +25,7 @@
 
 namespace FluxBB\Installer;
 
+use DB;
 use FluxBB\Core;
 use FluxBB\Models\Group;
 use FluxBB\Models\User;
@@ -88,8 +89,8 @@ class Installer
 		// Insert the three preset groups
 		$admin_group = Group::create(array(
 			'g_id'						=> Group::ADMIN,
-			'g_title'					=> t('seed_data.administrators'),
-			'g_user_title'				=> t('seed_data.administrator'),
+			'g_title'					=> trans('seed_data.administrators'),
+			'g_user_title'				=> trans('seed_data.administrator'),
 			'g_promote_min_posts'		=> 0,
 			'g_promote_next_group'		=> 0,
 			'g_moderator'				=> 0,
@@ -117,8 +118,8 @@ class Installer
 
 		$moderator_group = Group::create(array(
 			'g_id'						=> Group::MOD,
-			'g_title'					=> t('seed_data.moderators'),
-			'g_user_title'				=> t('seed_data.moderator'),
+			'g_title'					=> trans('seed_data.moderators'),
+			'g_user_title'				=> trans('seed_data.moderator'),
 			'g_promote_min_posts'		=> 0,
 			'g_promote_next_group'		=> 0,
 			'g_moderator'				=> 1,
@@ -146,7 +147,7 @@ class Installer
 
 		$member_group = Group::create(array(
 			'g_id'						=> Group::MEMBER,
-			'g_title'					=> t('seed_data.members'),
+			'g_title'					=> trans('seed_data.members'),
 			'g_user_title'				=> null,
 			'g_promote_min_posts'		=> 0,
 			'g_promote_next_group'		=> 0,
@@ -234,11 +235,11 @@ class Installer
 			'o_regs_allow'				=> 1,
 			'o_regs_verify'				=> 0,
 			'o_announcement'			=> 0,
-			'o_announcement_message'	=> t('seed_data.announcement'),
+			'o_announcement_message'	=> trans('seed_data.announcement'),
 			'o_rules'					=> 0,
-			'o_rules_message'			=> t('seed_data.rules'),
+			'o_rules_message'			=> trans('seed_data.rules'),
 			'o_maintenance'				=> 0,
-			'o_maintenance_message'		=> t('seed_data.maintenance_message'),
+			'o_maintenance_message'		=> trans('seed_data.maintenance_message'),
 			'o_default_dst'				=> 0,
 			'o_feed_type'				=> 2,
 			'o_feed_ttl'				=> 0,
