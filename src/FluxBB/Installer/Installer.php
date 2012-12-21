@@ -45,7 +45,6 @@ class Installer
 	public function writeDatabaseConfig(array $configuration)
 	{
 		$config = array('database' => $configuration);
-		$config['connections']['fluxbb'] = $configuration;
 
 		$confDump = '<?php'."\n\n".'return '.var_export($config, true).';'."\n";
 		$confFile = $this->container['path'].'/config/fluxbb.php';
