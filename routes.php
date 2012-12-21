@@ -23,5 +23,6 @@
  * @license		http://www.gnu.org/licenses/gpl.html	GNU General Public License
  */
 
-Route::controller('fluxbb_installer::home');
-Route::any('(:bundle)', 'fluxbb_installer::home@start');
+View::addNamespace('fluxbb_installer', __DIR__.'/views/');
+
+Route::any('install', 'FluxBB\Installer\Controller@run');
