@@ -20,7 +20,7 @@
 		<label>Table prefix</label>
 		<input type="text" name="db_prefix" />
 		<br><br>
-		<input type="submit" value="Weiter" />
+		<input type="submit" value="Continue" />
 	</form>
 
 @stop
