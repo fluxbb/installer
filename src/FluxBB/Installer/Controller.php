@@ -201,6 +201,8 @@ class Controller extends Base
 		$admin = $this->retrieve('admin');
 		$installer->createAdminUser($admin);
 
+		$installer->createDemoForum();
+
 		return $this->redirectTo('success');
 		// TODO: Dump errors
 	}

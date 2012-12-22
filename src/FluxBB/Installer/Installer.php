@@ -27,6 +27,7 @@ namespace FluxBB\Installer;
 
 use DB;
 use FluxBB\Core;
+use FluxBB\Models\Category;
 use FluxBB\Models\Group;
 use FluxBB\Models\User;
 use Illuminate\Container;
@@ -283,4 +284,20 @@ class Installer
 			'last_visit'		=> $this->container['request']->server('REQUEST_TIME'),
 		));
 	}
+
+	public function createDemoForum()
+	{
+		$category = Category::create(array(
+			'cat_name'		=> 'Test category',
+			'disp_position'	=> 0,
+		));
+
+		// Create a first forum for this category
+		$category->forums()->create(array(
+			'forum_name'	=> 'Test forum',
+			'forum_desc'	=> 'Your first forum for testing.',
+			'disp_position'	=> 0,
+		));
+	}
+
 }
