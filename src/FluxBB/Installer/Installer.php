@@ -265,15 +265,16 @@ class Installer
 
 	public function createAdminUser(array $user)
 	{
-		$adminGroup = Group::find(Group::ADMIN);
+
+		$adminGroup = Group::where('g_id', '=', Group::ADMIN)->first();
+
 
 		if (is_null($adminGroup))
 		{
 			throw new \LogicException('Could not find admin group.');
 		}
 
-		// Create admin user
-		$adminGroup->users()->create(array(
+		$adminUser = new User(array(
 			'username'			=> $user['username'],
 			'password'			=> $user['password'],
 			'email'				=> $user['email'],
@@ -282,7 +283,11 @@ class Installer
 			'registered'		=> $this->container['request']->server('REQUEST_TIME'),
 			'registration_ip'	=> $this->container['request']->getClientIp(),
 			'last_visit'		=> $this->container['request']->server('REQUEST_TIME'),
+			'group_id'			=> Group::ADMIN
 		));
+
+		$adminUser->save();
+
 	}
 
 	public function createDemoForum()
