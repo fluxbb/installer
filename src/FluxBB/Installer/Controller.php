@@ -228,7 +228,7 @@ class Controller extends Base
 	{
 		return $this->redirectTo($this->step)
 			->withInput(Input::all())
-			->withErrors($this->validation->getMessages());
+			->withErrors($this->validation->getMessageBag());
 	}
 
 	protected function remember($key, $value)
