@@ -209,7 +209,7 @@ class Controller extends Base
 
 	public function get_success()
 	{
-		return View::make('fluxbb_installer::success');
+		return View::make('fluxbb_installer::success', array('root_url' => Request::server('SERVER_NAME')));
 	}
 
 
