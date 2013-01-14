@@ -30,7 +30,7 @@ use FluxBB\Core;
 use FluxBB\Models\Category;
 use FluxBB\Models\Group;
 use FluxBB\Models\User;
-use Illuminate\Container;
+use Illuminate\Container\Container;
 use Schema;
 
 class Installer
