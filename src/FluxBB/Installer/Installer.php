@@ -88,7 +88,7 @@ class Installer
 	{
 		// Insert the three preset groups
 		$admin_group = Group::create(array(
-			'g_id'						=> 1,
+			'g_id'						=> Group::ADMIN,
 			'g_title'					=> trans('seed_data.administrators'),
 			'g_user_title'				=> trans('seed_data.administrator'),
 			'g_promote_min_posts'		=> 0,
