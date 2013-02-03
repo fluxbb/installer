@@ -71,7 +71,7 @@ class Controller extends Base
 	{
 		$rules = array(
 			// TODO: Verify language being valid
-			'language'	=> 'Required',
+			'language'	=> 'required',
 		);
 
 		// TODO: Set bundle (for localization)
@@ -93,9 +93,9 @@ class Controller extends Base
 	public function post_database()
 	{
 		$rules = array(
-			'db_host'	=> 'Required',
-			'db_name'	=> 'Required',
-			'db_user'	=> 'Required',
+			'db_host'	=> 'required',
+			'db_name'	=> 'required',
+			'db_user'	=> 'required',
 		);
 
 		if (!$this->validate($rules))
@@ -127,9 +127,9 @@ class Controller extends Base
 	public function post_admin()
 	{
 		$rules = array(
-			'username'	=> 'Required|Between:2,25|UsernameNotGuest|NoIp|UsernameNotReserved|NoBBcode',
-			'email'		=> 'Required|Email',
-			'password'	=> 'Required|Min:4|Confirmed',
+			'username'	=> 'required|between:2,25|username_not_guest|no_ip|username_not_reserved|no_bbcode',
+			'email'		=> 'required|email',
+			'password'	=> 'required|min:4|confirmed',
 		);
 
 		if (!$this->validate($rules))
@@ -156,8 +156,8 @@ class Controller extends Base
 	public function post_config()
 	{
 		$rules = array(
-			'title'			=> 'Required',
-			'description'	=> 'Required',
+			'title'			=> 'required',
+			'description'	=> 'required',
 		);
 
 		if (!$this->validate($rules))
