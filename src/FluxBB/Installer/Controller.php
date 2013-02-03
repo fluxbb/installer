@@ -186,11 +186,11 @@ class Controller extends Base
 
 		$db = $this->retrieve('db_conf');
 
-		$installer->writeDatabaseConfig($db);
-
 		// Tell the database to use this connection
-		Config::set('database.connections.fluxbb', Config::get('fluxbb.database'));
+		Config::set('database.connections.fluxbb', $db);
 		DB::setDefaultConnection('fluxbb');
+
+		$installer->writeDatabaseConfig($db);
 
 		$installer->createDatabaseTables();
 		$installer->createUserGroups();
