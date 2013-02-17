@@ -25,7 +25,7 @@
 
 namespace FluxBB\Installer;
 
-use FluxBB\Controllers\Base;
+use FluxBB\Controllers\BaseController;
 use Config;
 use DB;
 use Input;
@@ -35,7 +35,7 @@ use Session;
 use Validator;
 use View;
 
-class Controller extends Base
+class Controller extends BaseController
 {
 
 	protected $step;
