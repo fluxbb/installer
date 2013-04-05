@@ -26,6 +26,7 @@
 namespace FluxBB\Installer;
 
 use DB;
+use Eloquent;
 use FluxBB\Core;
 use FluxBB\Models\Category;
 use FluxBB\Models\Group;
@@ -41,6 +42,9 @@ class Installer
 	public function __construct(Container $app)
 	{
 		$this->container = $app;
+
+		// Make sure we can create demo data
+		Eloquent::unguard();
 	}
 
 	public function writeDatabaseConfig(array $configuration)
@@ -194,9 +198,7 @@ class Installer
 
 	public function createAdminUser(array $user)
 	{
-
 		$adminGroup = Group::where('id', '=', Group::ADMIN)->first();
-
 
 		if (is_null($adminGroup))
 		{
@@ -216,7 +218,6 @@ class Installer
 		));
 
 		$adminUser->save();
-
 	}
 
 	public function createDemoForum()
