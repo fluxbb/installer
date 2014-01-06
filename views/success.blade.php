@@ -2,7 +2,9 @@
 
 @section('main')
 
-	<h2>Installation successful</h2>
-	<p>You can now <a href="{{ route('index') }}">visit your forum index</a>.</p>
+	<div class="alert alert-success">
+		<strong>Installation successful!</strong>
+		<p>You can now <a href="{{ route('index') }}">visit your forum index</a>.</p>
+	</div>
 
 @stop
