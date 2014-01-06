@@ -2,12 +2,23 @@
 
 @section('main')
 
-	<h2>Run</h2>
+	<!-- begin installer panel -->
+	<div class="panel panel-info">
+		<div class="panel-heading">
+			<h3 class="panel-title">Run</h3>
+		</div>
+		<div class="panel-body">
+			<form method="post" role="form">
+				
+				<p>We have all the information we need. You are ready to run the FluxBB installation.</p>
+				<p>TODO: Review your information here.</p>
+				<input class="btn btn-primary" type="submit" value="Continue" />
+				
+			</form>
+		</div>
+	</div>
+	<!-- end installer panel -->
 
-	<form method="POST">
-		<p>You're ready to run the FluxBB installation.</p>
-		<p>TODO: Review information here.</p>
-		<input type="submit" value="Continue" />
-	</form>
+	
 
 @stop
