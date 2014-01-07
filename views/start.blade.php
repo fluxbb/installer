@@ -2,29 +2,23 @@
 
 @section('main')
 
-	<!-- begin installer panel -->
-	<div class="panel panel-info">
-		<div class="panel-heading">
-			<h3 class="panel-title">Welcome</h3>
-		</div>
-		<div class="panel-body">
-			<p>Welcome to the FluxBB Installer. This installer is going to guide you throught the
-			process of installing FluxBB.</p>
-			<form method="post" role="form">
-				
-				<div class="form-group">
-					<label for="language">Installation language</label>
-					<select class="form-control" name="language">
-						<option value="en">English</option>
-					</select>
+		<div id="brdinstall">
+
+			<img src="{{ URL::asset('packages/fluxbb/installer/img/logo_320.png') }}" alt="FluxBB2" />
+
+			<div id="instx" class="box">
+
+				<h4>Welcome to FluxBB 2.0!</h4>
+				<p>FluxBB 2 is a fast, light, user-friendly and extendable Forum Software. <strong>What would you like to do?</strong></p>
+				<div class="btn-group">
+					<a class="btn btn-primary" href="?step=install_db"><span class="icon-install"></span> Install from Scratch</a>
+					<span class="junction"><small>or</small></span>
+					<a class="btn btn-primary" href="?step=import_db"><span class="icon-cycle"></span> Import my old Forum</a>
 				</div>
-				
-				<input class="btn btn-primary" type="submit" value="Start!" />
-				
-			</form>
+
+			</div>
+
 		</div>
-	</div>
-	<!-- end installer panel -->
 
 
 @stop
