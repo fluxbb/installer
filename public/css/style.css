@@ -1,0 +1,130 @@
+/*
+ * Basics
+ */
+
+body {
+	background: #F6F9FC;
+	font-family: 'Source Sans Pro', sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	color: #4870a2;
+	font-family: 'Telex', sans-serif;
+}
+
+a {
+	color: #428bca;
+	text-decoration: none;
+}
+
+a, a:hover, a:focus, a:active {
+	text-decoration: none;
+}
+
+
+/*
+ * BRDINSTALL
+ */
+
+#brdinstallall {
+	margin: 12em auto 0 auto;
+	text-align: center;
+	width: 36em;
+}
+
+#brdinstallall p {
+	padding: 1em 1.5em;
+	text-align: justify;
+}
+
+#brdinstallall #instx {
+	background: #fff;
+	border: 1px solid #cad7e1;
+	border-radius: 0.25em;
+	margin-top: 2em;
+	padding: 1em 1em 2em 1em;
+}
+
+#brdinstallall #instx .junction {
+	background-color: #579CD8;
+	border-color: #357EBD;
+	color: #2854AA;
+	float: left;
+	font-size: 1em;
+	padding: 0.5em 0.75em;
+	position: relative;
+	text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+	text-transform: uppercase;
+	top: 0.35em;
+}
+
+#brdinstallall #instx .btn {
+	border-radius: 0.25em !important;
+	line-height: 2em;
+	min-width: 14em;
+}
+
+#brdinstallall #instx .btn span {
+	font-size: 2em;
+	position: relative;
+	top: 0.1em;
+}
+
+
+/*
+ * BRDIMPORT
+ */
+
+.installer {
+	margin: 2em auto;
+	text-align: center;
+	width: 64em;
+}
+
+#brdimport.installer #instx,
+#brdinstall.installer #instx {
+	background: #fff;
+	border: 1px solid #cad7e1;
+	border-radius: 0.25em;
+	margin-top: 2em;
+	padding: 1em 1.5em;
+	text-align: justify;
+}
+
+#brdimport.installer #instx .well h5,
+#brdinstall.installer #instx .well h5 {
+	margin-top: 0;
+}
+
+#brdimport.installer #instx .panel-heading h5,
+#brdinstall.installer #instx .panel-heading h5 {
+	color: #fff;
+	margin: 0;
+}
+
+#brdimport.installer #instx .panel-heading h5 span,
+#brdinstall.installer #instx .panel-heading h5 span {
+	line-height: 0.7em;
+}
+
+#brdimport.installer #instx .panel-body label span,
+#brdinstall.installer #instx .panel-body label span {
+	color: #4870a2;
+	display: block;
+	font-size: small;
+	font-weight: normal;
+}
+
+#brdimport.installer #instx .btn,
+#brdinstall.installer #instx .btn {
+	border-radius: 0.25em !important;
+	line-height: 2em;
+	min-width: 10em;
+}
+
+#brdimport.installer #instx .btn span,
+#brdinstall.installer #instx .btn span {
+	font-size: 2em;
+	position: relative;
+	top: 0.1em;
+}

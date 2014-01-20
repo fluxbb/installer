@@ -48,7 +48,7 @@ class Controller extends BaseController
 		$step = Input::query('step');
 		// TODO: Input::get()? https://github.com/illuminate/http/pull/7
 
-		$valid_steps = array('start', 'database', 'admin', 'config', 'run', 'success');
+		$valid_steps = array('start', 'install_db', 'install_admin', 'install_config', 'import_db', 'import_config', 'run', 'success');
 		if (!in_array($step, $valid_steps))
 		{
 			$step = 'start';
@@ -85,12 +85,12 @@ class Controller extends BaseController
 		return $this->redirectTo('database');
 	}
 
-	public function get_database()
+	public function get_install_db()
 	{
-		return View::make('fluxbb_installer::database');
+		return View::make('fluxbb_installer::install_db');
 	}
 
-	public function post_database()
+	public function post_install_db()
 	{
 		$rules = array(
 			'db_host'	=> 'required',
@@ -116,15 +116,15 @@ class Controller extends BaseController
 
 		$this->remember('db_conf', $db_conf);
 
-		return $this->redirectTo('admin');
+		return $this->redirectTo('install_admin');
 	}
 
-	public function get_admin()
+	public function get_install_admin()
 	{
-		return View::make('fluxbb_installer::admin');
+		return View::make('fluxbb_installer::install_admin');
 	}
 
-	public function post_admin()
+	public function post_install_admin()
 	{
 		$rules = array(
 			'username'	=> 'required|between:2,25|username_not_guest|no_ip|username_not_reserved|no_bbcode',
@@ -145,15 +145,76 @@ class Controller extends BaseController
 
 		$this->remember('admin', $user_info);
 
-		return $this->redirectTo('config');
+		return $this->redirectTo('install_config');
 	}
 
-	public function get_config()
+	public function get_install_config()
 	{
-		return View::make('fluxbb_installer::config');
+		return View::make('fluxbb_installer::install_config');
 	}
 
-	public function post_config()
+	public function post_install_config()
+	{
+		$rules = array(
+			'title'			=> 'required',
+			'description'	=> 'required',
+		);
+
+		if (!$this->validate($rules))
+		{
+			return $this->redirectBack();
+		}
+
+		$board_info = array(
+			'title'			=> Input::get('title'),
+			'description'	=> Input::get('description'),
+		);
+
+		$this->remember('board', $board_info);
+
+		return $this->redirectTo('run');
+	}
+
+	public function get_import_db()
+	{
+		return View::make('fluxbb_installer::import_db');
+	}
+
+	public function post_import_db()
+	{
+		$rules = array(
+			'db_host'	=> 'required',
+			'db_name'	=> 'required',
+			'db_user'	=> 'required',
+		);
+
+		if (!$this->validate($rules))
+		{
+			return $this->redirectBack();
+		}
+
+		$import_db_conf = array(
+			'driver'	=> 'mysql', // FIXME
+			'host'		=> Input::get('db_host'),
+			'database'	=> Input::get('db_name'),
+			'username'	=> Input::get('db_user'),
+			'password'	=> Input::get('db_pass'),
+			'charset'	=> 'utf8',
+			'collation'	=> 'utf8_unicode_ci',
+			'prefix'	=> Input::get('db_prefix'),
+		);
+
+		$this->remember('import_db_conf', $import_db_conf);
+
+		return $this->redirectTo('import_config');
+	}
+
+	public function get_import_config()
+	{
+		return View::make('fluxbb_installer::import_config');
+	}
+
+	public function post_import_config()
 	{
 		$rules = array(
 			'title'			=> 'required',

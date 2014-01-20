@@ -1,37 +1,28 @@
 <!DOCTYPE html>
+
 <html lang="en" dir="ltr">
-<head>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<title>FluxBB Installer</title>
-	
-	<!-- begin css -->
-	<link rel="stylesheet" href="http://static.sgitcdn.com/bootstrap/v3/css/bootstrap.css" />
-	<!-- end css -->
-	
-	<!-- begin js -->
-	<script src="http://code.jquery.com/jquery.js"></script>
-	<script src="http://static.sgitcdn.com/bootstrap/v3/js/bootstrap.js"></script>
-	<!-- end js -->
-	
-</head>
 
-<body>
-	
-	<!-- begin navbar -->
-	<nav class="navbar navbar-inverse navbar-static-top" role="navigation">
-		
-		<div class="navbar-header">
-			<a href="#" class="navbar-brand">FluxBB Installer</a>
-		</div>
-		
-	</nav>
-	<!-- end navbar -->	
-	
-	<!-- begin container -->
-	<div class="container">
-		@yield('main')
-	</div>
-	<!-- end container -->
+	<head>
 
-</body>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="description" content="">
+		<meta name="author" content="">
+
+		<title>Install your FluxBB Forum</title>
+
+		<link rel="stylesheet" type="text/css" href="{{ URL::asset('packages/fluxbb/installer/css/bootstrap.min.css') }}" />
+		<link rel="stylesheet" type="text/css" href="{{ URL::asset('packages/fluxbb/installer/css/style.css') }}" />
+		<link rel="stylesheet" type="text/css" href="{{ URL::asset('packages/fluxbb/installer/css/entypo.css') }}" />
+
+		<link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400|Telex" rel="stylesheet" type="text/css">
+
+	</head>
+
+	<body id="site-install">
+
+			@yield('main')
+
+	</body>
+
 </html>
