@@ -25,4 +25,4 @@
 
 View::addNamespace('fluxbb_installer', __DIR__.'/views/');
 
-Route::any('install', 'FluxBB\Installer\Controller@run');
+Route::any('install', 'FluxBB\Installer\Web\Controller@run');

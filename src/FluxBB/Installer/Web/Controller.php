@@ -1,6 +1,6 @@
 <?php
 
-namespace FluxBB\Installer;
+namespace FluxBB\Installer\Web;
 
 use FluxBB\Controllers\BaseController;
 use Config;
