@@ -3,6 +3,7 @@
 namespace FluxBB\Installer\Web;
 
 use FluxBB\Controllers\BaseController;
+use FluxBB\Installer\Installer;
 use Config;
 use DB;
 use Input;
