@@ -10,6 +10,8 @@ use FluxBB\Models\Group;
 use FluxBB\Models\User;
 use Illuminate\Container\Container;
 use Schema;
+use Illuminate\Support\Facades\Hash;
+
 
 class Installer
 {
@@ -184,7 +186,7 @@ class Installer
 
 		$adminUser = new User(array(
 			'username'			=> $user['username'],
-			'password'			=> $user['password'],
+			'password'			=> Hash::make($user['password']),
 			'email'				=> $user['email'],
 			'language'			=> $this->container['config']['app.locale'],
 			'style'				=> 'Air',
