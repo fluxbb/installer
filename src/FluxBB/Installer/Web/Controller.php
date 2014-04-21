@@ -23,8 +23,7 @@ class Controller extends BaseController
 
     public function run()
     {
-        $step = Input::query('step');
-        // TODO: Input::get()? https://github.com/illuminate/http/pull/7
+        $step = Input::get('step');
 
         $valid_steps = array('start', 'install_db', 'install_admin', 'install_config', 'import_db', 'import_config', 'run', 'success');
         if (!in_array($step, $valid_steps))
