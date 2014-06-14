@@ -44,11 +44,8 @@ class Installer
 		$migrationClasses = array(
 			'FluxBB\Migrations\Install\Bans',
 			'FluxBB\Migrations\Install\Categories',
-<<<<<<< HEAD
       'FluxBB\Migrations\Install\Censoring',
-=======
 			'FluxBB\Migrations\Install\Censoring',
->>>>>>> parent of 1e1510d... Migrations Censoring does not exist
 			'FluxBB\Migrations\Install\Config',
 			'FluxBB\Migrations\Install\ForumPerms',
 			'FluxBB\Migrations\Install\ForumSubscriptions',
