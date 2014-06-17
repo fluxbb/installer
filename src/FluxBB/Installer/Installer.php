@@ -44,7 +44,6 @@ class Installer
 		$migrationClasses = array(
 			'FluxBB\Migrations\Install\Bans',
 			'FluxBB\Migrations\Install\Categories',
-			'FluxBB\Migrations\Install\Censoring',
 			'FluxBB\Migrations\Install\Config',
 			'FluxBB\Migrations\Install\ForumPerms',
 			'FluxBB\Migrations\Install\ForumSubscriptions',
