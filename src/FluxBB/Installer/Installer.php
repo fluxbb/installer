@@ -3,12 +3,12 @@
 namespace FluxBB\Installer;
 
 use DB;
-use Eloquent;
 use FluxBB\Core;
 use FluxBB\Models\Category;
 use FluxBB\Models\Group;
 use FluxBB\Models\User;
 use Illuminate\Container\Container;
+use Illuminate\Database\Eloquent\Model;
 use Schema;
 
 class Installer
@@ -21,7 +21,7 @@ class Installer
 		$this->container = $app;
 
 		// Make sure we can create demo data
-		Eloquent::unguard();
+		Model::unguard();
 	}
 
 	public function writeDatabaseConfig(array $configuration)
