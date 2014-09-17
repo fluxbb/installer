@@ -29,7 +29,7 @@ class Installer
 		$config = array('database' => $configuration, 'route_prefix' => '');
 
 		$confDump = '<?php'."\n\n".'return '.var_export($config, true).';'."\n";
-		$confFile = $this->container['path'].'/config/fluxbb.php';
+		$confFile = $this->container['path.config'].'/fluxbb.php';
 
 		$success = $this->container['files']->put($confFile, $confDump);
 
