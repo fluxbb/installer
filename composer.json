@@ -20,6 +20,7 @@
 	"require": {
 		"php": ">=5.4.0",
 		"illuminate/support": "5.0.*@dev",
+        "illuminate/contracts": "5.0.*@dev",
 		"fluxbb/core": "@dev"
 	},
 	"autoload": {
