@@ -35,7 +35,7 @@ class Installer
 
 		if (!$success)
 		{
-			throw new RuntimeException('Unable to write config file. Please create the file "'.$confFile.'" with the following contents:'."\n\n".$config);
+			throw new \RuntimeException("Unable to write config file. Please create the file '$confFile' with the following contents:\n\n$config");
 		}
 	}
 
