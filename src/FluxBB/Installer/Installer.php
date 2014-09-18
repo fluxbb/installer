@@ -68,17 +68,17 @@ class Installer
 	public function createUserGroups()
 	{
 		// Insert the three preset groups
-		$admin_group = Group::create(array(
+		Group::create(array(
 			'id'	=> 1,
 			'title'	=> trans('seed_data.administrators'),
 		));
 
-		$moderator_group = Group::create(array(
+		Group::create(array(
 			'id'	=> 2,
 			'title'	=> trans('seed_data.moderators'),
 		));
 
-		$member_group = Group::create(array(
+		Group::create(array(
 			'id'	=> 4,
 			'title'	=> trans('seed_data.members'),
 		));
