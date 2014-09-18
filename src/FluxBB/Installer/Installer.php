@@ -7,7 +7,7 @@ use FluxBB\Core;
 use FluxBB\Models\Category;
 use FluxBB\Models\Group;
 use FluxBB\Models\User;
-use Illuminate\Container\Container;
+use Illuminate\Contracts\Container\Container;
 use Illuminate\Database\Eloquent\Model;
 use Schema;
 
@@ -16,9 +16,9 @@ class Installer
 
 	protected $container;
 
-	public function __construct(Container $app)
+	public function __construct(Container $container)
 	{
-		$this->container = $app;
+		$this->container = $container;
 
 		// Make sure we can create demo data
 		Model::unguard();
@@ -29,9 +29,9 @@ class Installer
 		$config = array('database' => $configuration, 'route_prefix' => '');
 
 		$confDump = '<?php'."\n\n".'return '.var_export($config, true).';'."\n";
-		$confFile = $this->container['path.config'].'/fluxbb.php';
+		$confFile = $this->container->make('path.config').'/fluxbb.php';
 
-		$success = $this->container['files']->put($confFile, $confDump);
+		$success = $this->container->make('files')->put($confFile, $confDump);
 
 		if (!$success)
 		{
@@ -107,7 +107,7 @@ class Installer
 			'o_smilies'					=> 1,
 			'o_smilies_sig'				=> 1,
 			'o_make_links'				=> 1,
-			'o_default_lang'			=> $this->container['config']['app.locale'],
+			'o_default_lang'			=> $this->container->make('config')['app.locale'],
 			'o_default_style'			=> 'Air', // FIXME
 			'o_default_user_group'		=> 4,
 			'o_topic_review'			=> 15,
@@ -185,11 +185,11 @@ class Installer
 			'username'			=> $user['username'],
 			'password'			=> $user['password'],
 			'email'				=> $user['email'],
-			'language'			=> $this->container['config']['app.locale'],
+			'language'			=> $this->container->make('config')['app.locale'],
 			'style'				=> 'Air',
-			'registered'		=> $this->container['request']->server('REQUEST_TIME'),
-			'registration_ip'	=> $this->container['request']->getClientIp(),
-			'last_visit'		=> $this->container['request']->server('REQUEST_TIME'),
+			'registered'		=> $this->container->make('request')->server('REQUEST_TIME'),
+			'registration_ip'	=> $this->container->make('request')->getClientIp(),
+			'last_visit'		=> $this->container->make('request')->server('REQUEST_TIME'),
 			'group_id'			=> Group::ADMIN
 		));
 
