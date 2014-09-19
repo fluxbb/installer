@@ -45,6 +45,7 @@ class Installer
 			'FluxBB\Migrations\Install\Bans',
 			'FluxBB\Migrations\Install\Categories',
 			'FluxBB\Migrations\Install\Config',
+            'FluxBB\Migrations\Install\Conversations',
 			'FluxBB\Migrations\Install\ForumPerms',
 			'FluxBB\Migrations\Install\ForumSubscriptions',
 			'FluxBB\Migrations\Install\Forums',
@@ -198,17 +199,25 @@ class Installer
 
 	public function createDemoForum()
 	{
-		$category = Category::create(array(
-			'cat_name'		=> 'Test category',
-			'disp_position'	=> 0,
-		));
+        // Create our first category
+        DB::table('categories')->insert([
+            'slug'      => '/',
+            'name'      => 'My forum',
+            'position'  => 0,
+        ]);
 
-		// Create a first forum for this category
-		$category->forums()->create(array(
-			'forum_name'	=> 'Test forum',
-			'forum_desc'	=> 'Your first forum for testing.',
-			'disp_position'	=> 0,
-		));
+        // And a subcategory
+        DB::table('categories')->insert([
+            'slug'      => '/announcements/',
+            'name'      => 'Announcements',
+            'position'  => 1,
+        ]);
+
+        // Create a conversation
+        DB::table('conversations')->insert([
+            'title'         => 'First conversation',
+            'category_slug' => '/',
+        ]);
 	}
 
 }
