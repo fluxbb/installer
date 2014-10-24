@@ -118,6 +118,7 @@ class Controller extends BaseController
             'username'  => Input::get('username'),
             'email'     => Input::get('email'),
             'password'  => Input::get('password'),
+            'ip'        => \Illuminate\Support\Facades\Request::getClientIp(),
         );
 
         $this->remember('admin', $user_info);

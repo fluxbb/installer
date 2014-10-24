@@ -2,14 +2,12 @@
 
 namespace FluxBB\Installer;
 
-use DB;
 use FluxBB\Core;
-use FluxBB\Models\Category;
 use FluxBB\Models\Group;
 use FluxBB\Models\User;
 use Illuminate\Contracts\Container\Container;
 use Illuminate\Database\Eloquent\Model;
-use Schema;
+use Illuminate\Support\Facades\DB;
 
 class Installer
 {
@@ -188,9 +186,9 @@ class Installer
 			'email'				=> $user['email'],
 			'language'			=> $this->container->make('config')['app.locale'],
 			'style'				=> 'Air',
-			'registered'		=> $this->container->make('request')->server('REQUEST_TIME'),
-			'registration_ip'	=> $this->container->make('request')->getClientIp(),
-			'last_visit'		=> $this->container->make('request')->server('REQUEST_TIME'),
+			'registered'		=> time(),
+			'registration_ip'	=> $user['ip'],
+			'last_visit'		=> time(),
 			'group_id'			=> Group::ADMIN
 		));
 
