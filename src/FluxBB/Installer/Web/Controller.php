@@ -221,13 +221,12 @@ class Controller extends BaseController
 
     public function post_run()
     {
-        $installer = new Installer(app());
-
         $db = $this->retrieve('db_conf');
 
         // Tell the database to use this connection
         Config::set('database.connections.fluxbb', $db);
-        DB::setDefaultConnection('fluxbb');
+        $installer = new Installer(app());
+        $installer->setDatabase(app('db')->connection('fluxbb'));
 
         $installer->writeDatabaseConfig($db);
 

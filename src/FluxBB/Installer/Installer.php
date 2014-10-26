@@ -6,25 +6,34 @@ use FluxBB\Core;
 use FluxBB\Models\Group;
 use FluxBB\Models\User;
 use Illuminate\Contracts\Container\Container;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Database\ConnectionInterface;
 
 class Installer
 {
-
+    /**
+     * @var \Illuminate\Contracts\Container\Container
+     */
 	protected $container;
+
+    /**
+     * @var \Illuminate\Database\ConnectionInterface
+     */
+    protected $database;
+
 
 	public function __construct(Container $container)
 	{
 		$this->container = $container;
-
-		// Make sure we can create demo data
-		Model::unguard();
 	}
+
+    public function setDatabase(ConnectionInterface $database)
+    {
+        $this->database = $database;
+    }
 
 	public function writeDatabaseConfig(array $configuration)
 	{
-		$config = array('database' => $configuration, 'route_prefix' => '');
+		$config = ['database' => $configuration, 'route_prefix' => ''];
 
 		$confDump = '<?php'."\n\n".'return '.var_export($config, true).';'."\n";
 		$confFile = $this->container->make('path.config').'/fluxbb.php';
@@ -57,9 +66,10 @@ class Installer
 			'FluxBB\Migrations\Install\Users',
 		);
 
+        $schema = $this->database->getSchemaBuilder();
 		foreach ($migrationClasses as $class)
 		{
-			$instance = new $class;
+			$instance = new $class($schema);
 			$instance->up();
 		}
 	}
@@ -67,20 +77,20 @@ class Installer
 	public function createUserGroups()
 	{
 		// Insert the three preset groups
-		Group::create(array(
+        $this->database->table('groups')->insert([
 			'id'	=> 1,
 			'title'	=> trans('seed_data.administrators'),
-		));
+		]);
 
-		Group::create(array(
+        $this->database->table('groups')->insert([
 			'id'	=> 2,
 			'title'	=> trans('seed_data.moderators'),
-		));
+		]);
 
-		Group::create(array(
+        $this->database->table('groups')->insert([
 			'id'	=> 4,
 			'title'	=> trans('seed_data.members'),
-		));
+		]);
 	}
 
 	public function setBoardInfo(array $board)
@@ -167,20 +177,20 @@ class Installer
 
 		foreach ($config as $conf_name => $conf_value)
 		{
-			DB::table('config')->insert(compact('conf_name', 'conf_value'));
+			$this->database->table('config')->insert(compact('conf_name', 'conf_value'));
 		}
 	}
 
 	public function createAdminUser(array $user)
 	{
-		$adminGroup = Group::where('id', '=', Group::ADMIN)->first();
+		$adminGroup = $this->database->table('groups')->where('id', '=', Group::ADMIN)->first();
 
 		if (is_null($adminGroup))
 		{
 			throw new \LogicException('Could not find admin group.');
 		}
 
-		$adminUser = new User(array(
+		$adminUser = new User([
 			'username'			=> $user['username'],
 			'password'			=> $user['password'],
 			'email'				=> $user['email'],
@@ -190,7 +200,7 @@ class Installer
 			'registration_ip'	=> $user['ip'],
 			'last_visit'		=> time(),
 			'group_id'			=> Group::ADMIN
-		));
+		]);
 
 		$adminUser->save();
 	}
@@ -198,21 +208,21 @@ class Installer
 	public function createDemoForum()
 	{
         // Create our first category
-        DB::table('categories')->insert([
+        $this->database->table('categories')->insert([
             'slug'      => '/',
             'name'      => 'My forum',
             'position'  => 0,
         ]);
 
         // And a subcategory
-        DB::table('categories')->insert([
+        $this->database->table('categories')->insert([
             'slug'      => '/announcements/',
             'name'      => 'Announcements',
             'position'  => 1,
         ]);
 
         // Create a conversation
-        DB::table('conversations')->insert([
+        $this->database->table('conversations')->insert([
             'title'         => 'First conversation',
             'category_slug' => '/',
         ]);

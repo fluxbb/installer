@@ -4,6 +4,8 @@ namespace FluxBB\Installer\Console;
 
 use FluxBB\Installer\Installer;
 use Illuminate\Console\Command;
+use Illuminate\Database\Connectors\ConnectionFactory;
+use Illuminate\Support\Facades\Config;
 
 class InstallCommand extends Command
 {
@@ -16,12 +18,18 @@ class InstallCommand extends Command
      */
     protected $installer;
 
+    /**
+     * @var \Illuminate\Database\Connectors\ConnectionFactory
+     */
+    protected $factory;
 
-    public function __construct(Installer $installer)
+
+    public function __construct(Installer $installer, ConnectionFactory $factory)
     {
         parent::__construct();
 
         $this->installer = $installer;
+        $this->factory = $factory;
     }
 
     protected function fire()
@@ -38,6 +46,10 @@ class InstallCommand extends Command
             'collation' => 'utf8_unicode_ci',
             'prefix'    => $this->ask('Table prefix?'),
         ];
+
+        $connection = $this->makeConnection($db);
+        $this->installer->setDatabase($connection);
+
         $this->installer->writeDatabaseConfig($db);
 
         $this->installer->createDatabaseTables();
@@ -60,5 +72,10 @@ class InstallCommand extends Command
         $this->installer->createDemoForum();
 
         $this->info('DONE.');
+    }
+
+    protected function makeConnection(array $config)
+    {
+        return $this->factory->make($config);
     }
 }
