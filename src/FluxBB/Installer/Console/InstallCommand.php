@@ -61,14 +61,6 @@ class InstallCommand extends Command
         ];
         $this->installer->setBoardInfo($board);
 
-        $admin = [
-            'username'  => 'admin',
-            'password'  => 'admin',
-            'email'     => 'admin@fluxbb.org',
-            'ip'        => '127.0.0.1',
-        ];
-        $this->installer->createAdminUser($admin);
-
         $this->installer->createDemoForum();
 
         $this->info('DONE.');
