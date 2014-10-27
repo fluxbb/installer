@@ -15,7 +15,6 @@ use View;
 
 class Controller extends BaseController
 {
-
     protected $step;
 
     protected $validation;
@@ -26,25 +25,24 @@ class Controller extends BaseController
         $step = Input::get('step');
 
         $valid_steps = array('start', 'install_db', 'install_admin', 'install_config', 'import_db', 'import_config', 'run', 'success');
-        if (!in_array($step, $valid_steps))
-        {
+        if (!in_array($step, $valid_steps)) {
             $step = 'start';
         }
 
         $this->step = $step;
 
         $method = strtolower(Request::getMethod());
-        $action = $method.'_'.$step;
+        $action = $method.ucfirst(camel_case($step));
 
         return $this->$action();
     }
 
-    public function get_start()
+    public function getStart()
     {
         return View::make('fluxbb_installer::start');
     }
 
-    public function post_start()
+    public function postStart()
     {
         $rules = array(
             // TODO: Verify language being valid
@@ -52,8 +50,7 @@ class Controller extends BaseController
         );
 
         // TODO: Set bundle (for localization)
-        if (!$this->validate($rules))
-        {
+        if (!$this->validate($rules)) {
             return $this->redirectBack();
         }
 
@@ -62,12 +59,12 @@ class Controller extends BaseController
         return $this->redirectTo('database');
     }
 
-    public function get_install_db()
+    public function getInstallDb()
     {
         return View::make('fluxbb_installer::install_db');
     }
 
-    public function post_install_db()
+    public function postInstallDb()
     {
         $rules = array(
             'db_host'   => 'required',
@@ -75,8 +72,7 @@ class Controller extends BaseController
             'db_user'   => 'required',
         );
 
-        if (!$this->validate($rules))
-        {
+        if (!$this->validate($rules)) {
             return $this->redirectBack();
         }
 
@@ -96,12 +92,12 @@ class Controller extends BaseController
         return $this->redirectTo('install_admin');
     }
 
-    public function get_install_admin()
+    public function getInstallAdmin()
     {
         return View::make('fluxbb_installer::install_admin');
     }
 
-    public function post_install_admin()
+    public function postInstallAdmin()
     {
         $rules = array(
             'username'  => 'required|between:2,25|username_not_guest|no_ip|username_not_reserved|no_bbcode',
@@ -109,8 +105,7 @@ class Controller extends BaseController
             'password'  => 'required|min:4|confirmed',
         );
 
-        if (!$this->validate($rules))
-        {
+        if (!$this->validate($rules)) {
             return $this->redirectBack();
         }
 
@@ -126,20 +121,19 @@ class Controller extends BaseController
         return $this->redirectTo('install_config');
     }
 
-    public function get_install_config()
+    public function getInstallConfig()
     {
         return View::make('fluxbb_installer::install_config');
     }
 
-    public function post_install_config()
+    public function postInstallConfig()
     {
         $rules = array(
             'title'         => 'required',
             'description'   => 'required',
         );
 
-        if (!$this->validate($rules))
-        {
+        if (!$this->validate($rules)) {
             return $this->redirectBack();
         }
 
@@ -153,12 +147,12 @@ class Controller extends BaseController
         return $this->redirectTo('run');
     }
 
-    public function get_import_db()
+    public function getImportDb()
     {
         return View::make('fluxbb_installer::import_db');
     }
 
-    public function post_import_db()
+    public function postImportDb()
     {
         $rules = array(
             'db_host'   => 'required',
@@ -166,8 +160,7 @@ class Controller extends BaseController
             'db_user'   => 'required',
         );
 
-        if (!$this->validate($rules))
-        {
+        if (!$this->validate($rules)) {
             return $this->redirectBack();
         }
 
@@ -187,20 +180,19 @@ class Controller extends BaseController
         return $this->redirectTo('import_config');
     }
 
-    public function get_import_config()
+    public function getImportConfig()
     {
         return View::make('fluxbb_installer::import_config');
     }
 
-    public function post_import_config()
+    public function postImportConfig()
     {
         $rules = array(
             'title'         => 'required',
             'description'   => 'required',
         );
 
-        if (!$this->validate($rules))
-        {
+        if (!$this->validate($rules)) {
             return $this->redirectBack();
         }
 
@@ -214,12 +206,12 @@ class Controller extends BaseController
         return $this->redirectTo('run');
     }
 
-    public function get_run()
+    public function getRun()
     {
         return View::make('fluxbb_installer::run');
     }
 
-    public function post_run()
+    public function postRun()
     {
         $db = $this->retrieve('db_conf');
 
@@ -245,7 +237,7 @@ class Controller extends BaseController
         // TODO: Dump errors
     }
 
-    public function get_success()
+    public function getSuccess()
     {
         return View::make('fluxbb_installer::success');
     }
@@ -283,5 +275,4 @@ class Controller extends BaseController
     {
         return Session::get('fluxbb.install.'.$key);
     }
-
 }
