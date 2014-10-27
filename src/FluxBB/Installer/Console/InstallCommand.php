@@ -5,7 +5,6 @@ namespace FluxBB\Installer\Console;
 use FluxBB\Installer\Installer;
 use Illuminate\Console\Command;
 use Illuminate\Database\Connectors\ConnectionFactory;
-use Illuminate\Support\Facades\Config;
 
 class InstallCommand extends Command
 {
