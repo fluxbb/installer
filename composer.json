@@ -25,6 +25,9 @@
         "illuminate/database": "5.0.*@dev",
 		"fluxbb/core": "@dev"
 	},
+    "require-dev": {
+        "squizlabs/php_codesniffer": "1.*"
+    },
 	"autoload": {
 		"psr-0": {
 			"FluxBB\\Installer": "src"
