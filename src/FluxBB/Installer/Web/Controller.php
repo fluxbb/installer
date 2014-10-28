@@ -5,7 +5,6 @@ namespace FluxBB\Installer\Web;
 use FluxBB\Installer\Installer;
 use FluxBB\Web\Controller as BaseController;
 use Illuminate\Support\Facades\Config;
-use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 
 class Controller extends BaseController
@@ -234,16 +233,16 @@ class Controller extends BaseController
 
     protected function remember($key, $value)
     {
-        Session::put('fluxbb.install.'.$key, $value);
+        $this->session->set("fluxbb.install.$key", $value);
     }
 
     protected function has($key)
     {
-        return Session::has('fluxbb.install.'.$key);
+        return $this->session->has("fluxbb.install.$key");
     }
 
     protected function retrieve($key)
     {
-        return Session::get('fluxbb.install.'.$key);
+        return $this->session->get("fluxbb.install.$key");
     }
 }
