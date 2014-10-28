@@ -11,9 +11,9 @@
 
 		<title>Install your FluxBB Forum</title>
 
-		<link rel="stylesheet" type="text/css" href="{{ URL::asset('packages/fluxbb/installer/css/bootstrap.min.css') }}" />
-		<link rel="stylesheet" type="text/css" href="{{ URL::asset('packages/fluxbb/installer/css/style.css') }}" />
-		<link rel="stylesheet" type="text/css" href="{{ URL::asset('packages/fluxbb/installer/css/entypo.css') }}" />
+		<link rel="stylesheet" type="text/css" href="/public/packages/fluxbb/installer/css/bootstrap.min.css" />
+		<link rel="stylesheet" type="text/css" href="/public/packages/fluxbb/installer/css/style.css" />
+		<link rel="stylesheet" type="text/css" href="/public/packages/fluxbb/installer/css/entypo.css" />
 
 		<link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400|Telex" rel="stylesheet" type="text/css">
 

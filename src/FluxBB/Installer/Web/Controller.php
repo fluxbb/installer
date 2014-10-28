@@ -2,16 +2,11 @@
 
 namespace FluxBB\Installer\Web;
 
-use FluxBB\Controllers\BaseController;
 use FluxBB\Installer\Installer;
-use Config;
-use DB;
-use Input;
-use Redirect;
-use Request;
-use Session;
-use Validator;
-use View;
+use FluxBB\Web\Controller as BaseController;
+use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Validator;
 
 class Controller extends BaseController
 {
@@ -20,195 +15,184 @@ class Controller extends BaseController
     protected $validation;
 
 
-    public function run()
+    public function index()
     {
-        $step = Input::get('step');
-
-        $valid_steps = array('start', 'install_db', 'install_admin', 'install_config', 'import_db', 'import_config', 'run', 'success');
-        if (!in_array($step, $valid_steps)) {
-            $step = 'start';
-        }
-
-        $this->step = $step;
-
-        $method = strtolower(Request::getMethod());
-        $action = $method.ucfirst(camel_case($step));
-
-        return $this->$action();
+        // TODO: Detect where to redirect here, based on state of installation
+        return $this->redirect('install_start');
     }
 
-    public function getStart()
+    public function start()
     {
-        return View::make('fluxbb_installer::start');
+        return $this->view('fluxbb_installer::start');
     }
 
     public function postStart()
     {
-        $rules = array(
+        $rules = [
             // TODO: Verify language being valid
             'language'  => 'required',
-        );
+        ];
 
         // TODO: Set bundle (for localization)
         if (!$this->validate($rules)) {
-            return $this->redirectBack();
+            return $this->redirect('install_start');
         }
 
-        $this->remember('language', Input::get('language'));
+        $this->remember('language', $this->getInput('language'));
 
-        return $this->redirectTo('database');
+        return $this->redirect('install_database');
     }
 
-    public function getInstallDb()
+    public function database()
     {
-        return View::make('fluxbb_installer::install_db');
+        return $this->view('fluxbb_installer::install_db');
     }
 
-    public function postInstallDb()
+    public function postDatabase()
     {
-        $rules = array(
+        $rules = [
             'db_host'   => 'required',
             'db_name'   => 'required',
             'db_user'   => 'required',
-        );
+        ];
 
         if (!$this->validate($rules)) {
-            return $this->redirectBack();
+            return $this->redirect('install_database');
         }
 
-        $db_conf = array(
+        $db_conf = [
             'driver'    => 'mysql', // FIXME
-            'host'      => Input::get('db_host'),
-            'database'  => Input::get('db_name'),
-            'username'  => Input::get('db_user'),
-            'password'  => Input::get('db_pass'),
+            'host'      => $this->getInput('db_host'),
+            'database'  => $this->getInput('db_name'),
+            'username'  => $this->getInput('db_user'),
+            'password'  => $this->getInput('db_pass'),
             'charset'   => 'utf8',
             'collation' => 'utf8_unicode_ci',
-            'prefix'    => Input::get('db_prefix'),
-        );
+            'prefix'    => $this->getInput('db_prefix'),
+        ];
 
         $this->remember('db_conf', $db_conf);
 
-        return $this->redirectTo('install_admin');
+        return $this->redirect('install_admin');
     }
 
-    public function getInstallAdmin()
+    public function admin()
     {
-        return View::make('fluxbb_installer::install_admin');
+        return $this->view('fluxbb_installer::install_admin');
     }
 
-    public function postInstallAdmin()
+    public function postAdmin()
     {
-        $rules = array(
+        $rules = [
             'username'  => 'required|between:2,25|username_not_guest|no_ip|username_not_reserved|no_bbcode',
             'email'     => 'required|email',
             'password'  => 'required|min:4|confirmed',
-        );
+        ];
 
         if (!$this->validate($rules)) {
-            return $this->redirectBack();
+            return $this->redirect('install_admin');
         }
 
-        $user_info = array(
-            'username'  => Input::get('username'),
-            'email'     => Input::get('email'),
-            'password'  => Input::get('password'),
-            'ip'        => \Illuminate\Support\Facades\Request::getClientIp(),
-        );
+        $user_info = [
+            'username'  => $this->getInput('username'),
+            'email'     => $this->getInput('email'),
+            'password'  => $this->getInput('password'),
+            'ip'        => $this->request->getClientIp(),
+        ];
 
         $this->remember('admin', $user_info);
 
-        return $this->redirectTo('install_config');
+        return $this->redirect('install_config');
     }
 
-    public function getInstallConfig()
+    public function config()
     {
-        return View::make('fluxbb_installer::install_config');
+        return $this->view('fluxbb_installer::install_config');
     }
 
-    public function postInstallConfig()
+    public function postConfig()
     {
-        $rules = array(
+        $rules = [
             'title'         => 'required',
             'description'   => 'required',
-        );
+        ];
 
         if (!$this->validate($rules)) {
-            return $this->redirectBack();
+            return $this->redirect('install_config');
         }
 
-        $board_info = array(
-            'title'         => Input::get('title'),
-            'description'   => Input::get('description'),
-        );
+        $board_info = [
+            'title'         => $this->getInput('title'),
+            'description'   => $this->getInput('description'),
+        ];
 
         $this->remember('board', $board_info);
 
-        return $this->redirectTo('run');
+        return $this->redirect('install_run');
     }
 
     public function getImportDb()
     {
-        return View::make('fluxbb_installer::import_db');
+        return $this->view('fluxbb_installer::import_db');
     }
 
     public function postImportDb()
     {
-        $rules = array(
+        $rules = [
             'db_host'   => 'required',
             'db_name'   => 'required',
             'db_user'   => 'required',
-        );
+        ];
 
         if (!$this->validate($rules)) {
-            return $this->redirectBack();
+            return $this->redirect('install_import');
         }
 
-        $import_db_conf = array(
+        $import_db_conf = [
             'driver'    => 'mysql', // FIXME
-            'host'      => Input::get('db_host'),
-            'database'  => Input::get('db_name'),
-            'username'  => Input::get('db_user'),
-            'password'  => Input::get('db_pass'),
+            'host'      => $this->getInput('db_host'),
+            'database'  => $this->getInput('db_name'),
+            'username'  => $this->getInput('db_user'),
+            'password'  => $this->getInput('db_pass'),
             'charset'   => 'utf8',
             'collation' => 'utf8_unicode_ci',
-            'prefix'    => Input::get('db_prefix'),
-        );
+            'prefix'    => $this->getInput('db_prefix'),
+        ];
 
         $this->remember('import_db_conf', $import_db_conf);
 
-        return $this->redirectTo('import_config');
+        return $this->redirect('install_import_config');
     }
 
     public function getImportConfig()
     {
-        return View::make('fluxbb_installer::import_config');
+        return $this->view('fluxbb_installer::import_config');
     }
 
     public function postImportConfig()
     {
-        $rules = array(
+        $rules = [
             'title'         => 'required',
             'description'   => 'required',
-        );
+        ];
 
         if (!$this->validate($rules)) {
-            return $this->redirectBack();
+            return $this->redirect('install_import_config');
         }
 
-        $board_info = array(
-            'title'         => Input::get('title'),
-            'description'   => Input::get('description'),
-        );
+        $board_info = [
+            'title'         => $this->getInput('title'),
+            'description'   => $this->getInput('description'),
+        ];
 
         $this->remember('board', $board_info);
 
-        return $this->redirectTo('run');
+        return $this->redirect('install_run');
     }
 
-    public function getRun()
+    public function run()
     {
-        return View::make('fluxbb_installer::run');
+        return $this->view('fluxbb_installer::run');
     }
 
     public function postRun()
@@ -233,32 +217,19 @@ class Controller extends BaseController
 
         $installer->createDemoForum();
 
-        return $this->redirectTo('success');
+        return $this->redirect('install_success');
         // TODO: Dump errors
     }
 
-    public function getSuccess()
+    public function success()
     {
-        return View::make('fluxbb_installer::success');
+        return $this->view('fluxbb_installer::success');
     }
-
 
     protected function validate(array $rules)
     {
-        $this->validation = Validator::make(Input::all(), $rules);
+        $this->validation = Validator::make($this->input, $rules);
         return $this->validation->passes();
-    }
-
-    protected function redirectTo($step)
-    {
-        return Redirect::to(Request::url().'?step='.$step);
-    }
-
-    protected function redirectBack()
-    {
-        return $this->redirectTo($this->step)
-            ->withInput(Input::all())
-            ->withErrors($this->validation->getMessageBag());
     }
 
     protected function remember($key, $value)
