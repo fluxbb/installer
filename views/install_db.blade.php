@@ -46,10 +46,10 @@
 								<div class="form-group">
 									<label for="db_type" class="col-md-4 control-label">Type<span>Which type of database server are you running?</span></label>
 									<div class="col-md-6">
-										<select class="form-control" name="db_type">
+										<select class="form-control" name="driver">
 											<option value="mysqli">MySQL Improved</option>
 											<option value="mysqli_innodb">MySQL Improved (InnoDB)</option>
-											<option value="mysql">MySQL Standard</option>
+											<option value="mysql" selected="selected">MySQL Standard</option>
 											<option value="mysql_innodb">MySQL Standard (InnoDB)</option>
 										</select>
 										
@@ -58,31 +58,31 @@
 								<div class="form-group">
 									<label for="db_host" class="col-md-4 control-label">Server Hostname<span>Where to find your server.</span></label>
 									<div class="col-md-8">
-										<input type="text" class="form-control" id="db_host" name="db_host" value="" placeholder="localhost" />
+										<input type="text" class="form-control" id="db_host" name="host" value="" placeholder="localhost" />
 									</div>
 								</div>
 								<div class="form-group">
 									<label for="db_name" class="col-md-4 control-label">Name<span>Which database shall we use?</span></label>
 									<div class="col-md-8">
-										<input type="text" class="form-control" id="db_name" name="db_name" value="" placeholder="fluxbb" />
+										<input type="text" class="form-control" id="db_name" name="database" value="" placeholder="fluxbb" />
 									</div>
 								</div>
 								<div class="form-group">
 									<label for="db_user" class="col-md-4 control-label">Username<span>What's yer name?</span></label>
 									<div class="col-md-8">
-										<input type="text" class="form-control" id="db_user" name="db_user" placeholder="Username">
+										<input type="text" class="form-control" id="db_user" name="username" placeholder="Username">
 									</div>
 								</div>
 								<div class="form-group">
 									<label for="db_pass" class="col-md-4 control-label">Password<span>What is yer favorite color?</span></label>
 									<div class="col-md-8">
-										<input type="password" class="form-control" id="db_pass" name="db_pass" placeholder="Password">
+										<input type="password" class="form-control" id="db_pass" name="password" placeholder="Password">
 									</div>
 								</div>
 								<div class="form-group">
 									<label for="db_prefix" class="col-md-4 control-label">Table Prefix<span>Ni!</span></label>
 									<div class="col-md-8">
-										<input type="text" class="form-control" id="db_prefix" name="db_prefix" value="" placeholder="fluxbb_" />
+										<input type="text" class="form-control" id="db_prefix" name="prefix" value="" placeholder="fluxbb_" />
 									</div>
 								</div>
 							</div>

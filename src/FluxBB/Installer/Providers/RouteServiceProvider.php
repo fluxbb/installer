@@ -2,6 +2,7 @@
 
 namespace FluxBB\Installer\Providers;
 
+use FluxBB\Server\Server;
 use FluxBB\Web\Router;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Support\ServiceProvider;
@@ -15,6 +16,11 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        $this->app->extend('fluxbb.server.core', function (Server $server) {
+            $server->registerAction('write_configuration', 'FluxBB\Installer\WriteConfiguration');
+
+            return $server;
+        });
     }
 
     /**

@@ -46,19 +46,13 @@
 								<div class="form-group">
 									<label for="title" class="col-md-4 control-label">Board title<span>Find some catchy title</span></label>
 									<div class="col-md-8">
-										<input type="text" class="form-control" id="title" name="title" placeholder="My FluxBB2 Forum" />
+										<input type="text" class="form-control" id="title" name="board_title" placeholder="My FluxBB2 Forum" />
 									</div>
 								</div>
 								<div class="form-group">
 									<label for="description" class="col-md-4 control-label">Board description<span>HTML is allowed here.</span></label>
 									<div class="col-md-8">
-										<textarea class="form-control" id="description" name="description" placeholder="Unfortunately no one can be told what FluxBB is - you have to see it for yourself."></textarea>
-									</div>
-								</div>
-								<div class="form-group">
-									<label for="base_url" class="col-md-4 control-label">Board URL<span>forget the trailing slash</span></label>
-									<div class="col-md-8">
-										<input type="text" class="form-control" id="base_url" name="base_url" placeholder="https://fluxbb.org/forums" />
+										<textarea class="form-control" id="description" name="board_desc" placeholder="Unfortunately no one can be told what FluxBB is - you have to see it for yourself."></textarea>
 									</div>
 								</div>
 								<div class="form-group">
@@ -88,7 +82,7 @@
 
 					<p class="clearfix">
 						<a href="javascript:history.go(-1)" class="btn btn-danger pull-left">← Previous Step</a>
-						<input type="submit" class="btn btn-success pull-right" name="save" value="Next Step →" />
+						<input type="submit" class="btn btn-success pull-right" value="Next Step →" />
 					</p>
 
 				</form>
