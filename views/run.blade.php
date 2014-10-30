@@ -2,21 +2,24 @@
 
 @section('main')
 
-    <!-- begin installer panel -->
-    <div class="panel panel-info">
-        <div class="panel-heading">
-            <h3 class="panel-title">Run</h3>
-        </div>
-        <div class="panel-body">
-            <form method="post" role="form">
+        <div id="brdinstall" class="installer">
 
-                <p>We have all the information we need. You are ready to run the FluxBB installation.</p>
-                <p>TODO: Review your information here.</p>
-                <input class="btn btn-primary" type="submit" value="Continue" />
+            <img src="/public/packages/fluxbb/installer/img/logo_320.png" alt="FluxBB2" />
 
-            </form>
+            <div id="instx" class="box">
+
+                <h4>Last step</h4>
+                <p>We are almost there. One more step to go.</p>
+                <form method="post" role="form">
+                    <p class="clearfix">
+                        <a href="javascript:history.go(-1)" class="btn btn-danger pull-left">← Previous Step</a>
+                        <input type="submit" class="btn btn-success pull-right" name="save" value="Run →" />
+                    </p>
+                </form>
+
+            </div>
+
         </div>
-    </div>
-    <!-- end installer panel -->
+
 
 @stop
