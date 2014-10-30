@@ -2,7 +2,7 @@
 
 @section('main')
 
-		<div id="brdinstall">
+		<div id="brdinstall" class="installer">
 
 			<img src="/public/packages/fluxbb/installer/img/logo_320.png" alt="FluxBB2" />
 

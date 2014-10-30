@@ -26,18 +26,18 @@ a, a:hover, a:focus, a:active {
  * BRDINSTALL
  */
 
-#brdinstallall {
+#brdinstall {
 	margin: 12em auto 0 auto;
 	text-align: center;
-	width: 36em;
+	width: 64em;
 }
 
-#brdinstallall p {
+#brdinstall p {
 	padding: 1em 1.5em;
 	text-align: justify;
 }
 
-#brdinstallall #instx {
+#brdinstall #instx {
 	background: #fff;
 	border: 1px solid #cad7e1;
 	border-radius: 0.25em;
@@ -45,7 +45,7 @@ a, a:hover, a:focus, a:active {
 	padding: 1em 1em 2em 1em;
 }
 
-#brdinstallall #instx .junction {
+#brdinstall #instx .junction {
 	background-color: #579CD8;
 	border-color: #357EBD;
 	color: #2854AA;
@@ -58,13 +58,13 @@ a, a:hover, a:focus, a:active {
 	top: 0.35em;
 }
 
-#brdinstallall #instx .btn {
+#brdinstall #instx .btn {
 	border-radius: 0.25em !important;
 	line-height: 2em;
 	min-width: 14em;
 }
 
-#brdinstallall #instx .btn span {
+#brdinstall #instx .btn span {
 	font-size: 2em;
 	position: relative;
 	top: 0.1em;
@@ -74,12 +74,6 @@ a, a:hover, a:focus, a:active {
 /*
  * BRDIMPORT
  */
-
-.installer {
-	margin: 2em auto;
-	text-align: center;
-	width: 64em;
-}
 
 #brdimport.installer #instx,
 #brdinstall.installer #instx {
