@@ -91,7 +91,7 @@ class Installer
         ]);
     }
 
-    public function setBoardInfo(array $board)
+    public function createConfig()
     {
         // Enable/disable avatars depending on file_uploads setting in PHP configuration
         $avatars = in_array(strtolower(@ini_get('file_uploads')), array('on', 'true', '1')) ? 1 : 0;
@@ -99,8 +99,8 @@ class Installer
         // Insert config data
         $config = array(
             'o_cur_version'				=> Core::version(),
-            'o_board_title'				=> $board['title'],
-            'o_board_desc'				=> $board['description'],
+            'o_board_title'				=> '',
+            'o_board_desc'				=> '',
             'o_default_timezone'		=> 0,
             'o_time_format'				=> 'H:i:s',
             'o_date_format'				=> 'Y-m-d',

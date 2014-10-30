@@ -39,6 +39,7 @@ class Controller extends BaseController
 
             $this->installer->setDatabase($this->getConnection());
             $this->installer->createDatabaseTables();
+            $this->installer->createConfig();
 
             return $this->redirect('install_admin');
         } catch (ValidationFailed $e) {
