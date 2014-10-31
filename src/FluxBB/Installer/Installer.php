@@ -31,7 +31,7 @@ class Installer
 
     public function createDatabaseTables()
     {
-        $migrationClasses = array(
+        $migrationClasses = [
             'FluxBB\Migrations\Install\Bans',
             'FluxBB\Migrations\Install\Categories',
             'FluxBB\Migrations\Install\Config',
@@ -47,7 +47,7 @@ class Installer
             'FluxBB\Migrations\Install\TopicSubscriptions',
             'FluxBB\Migrations\Install\Topics',
             'FluxBB\Migrations\Install\Users',
-        );
+        ];
 
         $schema = $this->database->getSchemaBuilder();
         foreach ($migrationClasses as $class) {
@@ -78,10 +78,10 @@ class Installer
     public function createConfig()
     {
         // Enable/disable avatars depending on file_uploads setting in PHP configuration
-        $avatars = in_array(strtolower(@ini_get('file_uploads')), array('on', 'true', '1')) ? 1 : 0;
+        $avatars = in_array(strtolower(@ini_get('file_uploads')), ['on', 'true', '1']) ? 1 : 0;
 
         // Insert config data
-        $config = array(
+        $config = [
             'o_cur_version'				=> Core::version(),
             'o_board_title'				=> '',
             'o_board_desc'				=> '',
@@ -155,7 +155,7 @@ class Installer
             'p_allow_banned_email'		=> 1,
             'p_allow_dupe_email'		=> 0,
             'p_force_guest_email'		=> 1
-        );
+        ];
 
         foreach ($config as $conf_name => $conf_value) {
             $this->database->table('config')->insert(compact('conf_name', 'conf_value'));
