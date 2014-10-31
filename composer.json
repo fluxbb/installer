@@ -19,12 +19,12 @@
 	},
 	"require": {
 		"php": ">=5.4.0",
-		"illuminate/support": "5.0.*@dev",
+        "fluxbb/core": "@dev",
+        "illuminate/support": "5.0.*@dev",
         "illuminate/contracts": "5.0.*@dev",
-        "illuminate/console": "5.0.*@dev",
         "illuminate/database": "5.0.*@dev",
-		"fluxbb/core": "@dev"
-	},
+        "symfony/console": "2.6.*"
+    },
     "require-dev": {
         "squizlabs/php_codesniffer": "1.*"
     },
