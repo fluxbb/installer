@@ -6,6 +6,7 @@ use FluxBB\Core\Action;
 use FluxBB\Server\Exception\Exception;
 use Illuminate\Contracts\Container\Container;
 use Illuminate\Contracts\Filesystem\Filesystem;
+use Illuminate\Database\Connectors\ConnectionFactory;
 
 class WriteConfiguration extends Action
 {
@@ -13,11 +14,14 @@ class WriteConfiguration extends Action
 
     protected $files;
 
+    protected $factory;
 
-    public function __construct(Container $container, Filesystem $filesystem)
+
+    public function __construct(Container $container, Filesystem $filesystem, ConnectionFactory $factory)
     {
         $this->container = $container;
         $this->files = $filesystem;
+        $this->factory = $factory;
     }
 
     protected function run()
@@ -46,5 +50,9 @@ class WriteConfiguration extends Action
                 "Unable to write config file. Please create the file '$file' with the following contents:\n\n$config"
             );
         }
+
+        return [
+            'connection' => $this->factory->make($config['database'], 'fluxbb'),
+        ];
     }
 }
