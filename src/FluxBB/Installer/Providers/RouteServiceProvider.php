@@ -16,11 +16,6 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->extend('fluxbb.server.core', function (Server $server) {
-            $server->registerAction('write_configuration', 'FluxBB\Installer\WriteConfiguration');
-
-            return $server;
-        });
     }
 
     /**
