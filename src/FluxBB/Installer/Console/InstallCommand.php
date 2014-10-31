@@ -3,8 +3,8 @@
 namespace FluxBB\Installer\Console;
 
 use FluxBB\Installer\Installer;
-use Illuminate\Console\Command;
-use Illuminate\Database\Connectors\ConnectionFactory;
+use FluxBB\Console\Command;
+use FluxBB\Server\Exception\ValidationFailed;
 
 class InstallCommand extends Command
 {
@@ -17,56 +17,84 @@ class InstallCommand extends Command
      */
     protected $installer;
 
-    /**
-     * @var \Illuminate\Database\Connectors\ConnectionFactory
-     */
-    protected $factory;
 
-
-    public function __construct(Installer $installer, ConnectionFactory $factory)
+    public function __construct(Installer $installer)
     {
         parent::__construct();
 
         $this->installer = $installer;
-        $this->factory = $factory;
     }
 
     protected function fire()
     {
         $this->info('Installing FluxBB...');
 
-        $db = [
-            'driver'    => 'mysql',
-            'host'      => 'localhost',
-            'database'  => 'homestead',
-            'username'  => 'homestead',
-            'password'  => 'secret',
-            'charset'   => 'utf8',
-            'collation' => 'utf8_unicode_ci',
-            'prefix'    => $this->ask('Table prefix?'),
-        ];
+        $this->configureDatabase();
 
-        $connection = $this->makeConnection($db);
-        $this->installer->setDatabase($connection);
+        $this->createTablesAndConfig();
 
-        $this->installer->writeDatabaseConfig($db);
+        $this->createAdminUser();
 
-        $this->installer->createDatabaseTables();
-        $this->installer->createUserGroups();
+        $this->setBoardOptions();
 
-        $board = [
-            'title'         => 'FluxBB 2.0 Test',
-            'description'   => 'Testing the fun.',
-        ];
-        $this->installer->setBoardInfo($board);
-
-        $this->installer->createDemoForum();
+        $this->createDemoContent();
 
         $this->info('DONE.');
     }
 
-    protected function makeConnection(array $config)
+    protected function configureDatabase()
     {
-        return $this->factory->make($config);
+        $configuration = [
+            'driver'   => 'mysql',
+            'host'     => 'localhost',
+            'database' => 'homestead',
+            'username' => 'homestead',
+            'password' => 'secret',
+            'prefix'   => $this->ask('Table prefix?'),
+        ];
+
+        $result = $this->dispatch('write_configuration', $configuration)->getData();
+
+        $connection = $result['connection'];
+        $this->installer->setDatabase($connection);
+    }
+
+    protected function createTablesAndConfig()
+    {
+        $this->installer->createDatabaseTables();
+        $this->installer->createConfig();
+    }
+
+    protected function createAdminUser()
+    {
+        try {
+            $this->dispatch('handle_registration', [
+                'username'              => 'admin',
+                'password'              => 'admin',
+                'password_confirmation' => 'admin',
+                'email'                 => 'admin@admin.org',
+                'ip'                    => '127.0.0.1',
+            ]);
+        } catch (ValidationFailed $e) {
+            $this->error('Validation failed for admin user');
+        }
+    }
+
+    protected function setBoardOptions()
+    {
+        try {
+            $this->dispatch('admin.options.set', [
+                'board_title' => 'FluxBB 2.0 Test',
+                'board_desc'  => 'Testing the fun.',
+            ]);
+        } catch (ValidationFailed $e) {
+            $this->error('Validation failed for board options');
+        }
+    }
+
+    protected function createDemoContent()
+    {
+        $this->installer->createUserGroups();
+        $this->installer->createDemoForum();
     }
 }

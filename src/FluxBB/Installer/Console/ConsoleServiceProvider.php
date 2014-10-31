@@ -2,8 +2,6 @@
 
 namespace FluxBB\Installer\Console;
 
-use FluxBB\Installer\Installer;
-use Illuminate\Database\Connectors\ConnectionFactory;
 use Illuminate\Support\ServiceProvider;
 
 class ConsoleServiceProvider extends ServiceProvider
@@ -19,10 +17,8 @@ class ConsoleServiceProvider extends ServiceProvider
 
     public function boot()
     {
-        $installer = new Installer($this->app);
-        $factory = new ConnectionFactory($this->app);
-
-        $installCommand = new InstallCommand($installer, $factory);
+        $factory = $this->app->make('FluxBB\Console\CommandFactory');
+        $installCommand = $factory->make('FluxBB\Installer\Console\InstallCommand');
 
         $this->app->make('console')->add($installCommand);
     }
