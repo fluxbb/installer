@@ -5,6 +5,7 @@ namespace FluxBB\Installer\Console;
 use FluxBB\Installer\Installer;
 use FluxBB\Console\Command;
 use FluxBB\Server\Exception\ValidationFailed;
+use Symfony\Component\Console\Input\InputOption;
 
 class InstallCommand extends Command
 {
@@ -17,6 +18,11 @@ class InstallCommand extends Command
      */
     protected $installer;
 
+    /**
+     * @var \FluxBB\Installer\Console\DataProviderInterface
+     */
+    protected $data;
+
 
     public function __construct(Installer $installer)
     {
@@ -25,8 +31,17 @@ class InstallCommand extends Command
         $this->installer = $installer;
     }
 
+    protected function getOptions()
+    {
+        return [
+            ['defaults', 'd', InputOption::VALUE_NONE, 'Create default settings and user']
+        ];
+    }
+
     protected function fire()
     {
+        $this->init();
+
         $this->info('Installing FluxBB...');
 
         $this->configureDatabase();
@@ -42,16 +57,19 @@ class InstallCommand extends Command
         $this->info('DONE.');
     }
 
+    protected function init()
+    {
+        if ($this->option('defaults')) {
+            $this->data = new DefaultDataProvider();
+        } else {
+            $this->data = new UserDataProvider($this->input, $this->output, $this->getHelperSet());
+        }
+    }
+
     protected function configureDatabase()
     {
-        $configuration = [
-            'driver'   => 'mysql',
-            'host'     => 'localhost',
-            'database' => 'homestead',
-            'username' => 'homestead',
-            'password' => 'secret',
-            'prefix'   => $this->ask('Table prefix?'),
-        ];
+        $configuration = $this->data->getDatabaseConfiguration();
+        $configuration['prefix'] = $this->ask('Table prefix?');
 
         $result = $this->dispatch('write_configuration', $configuration);
 
@@ -68,13 +86,10 @@ class InstallCommand extends Command
     protected function createAdminUser()
     {
         try {
-            $this->dispatch('handle_registration', [
-                'username'              => 'admin',
-                'password'              => 'admin',
-                'password_confirmation' => 'admin',
-                'email'                 => 'admin@admin.org',
-                'ip'                    => '127.0.0.1',
-            ]);
+            $user = $this->data->getAdminUser();
+            $user['ip'] = '127.0.0.1';
+
+            $this->dispatch('handle_registration', $user);
         } catch (ValidationFailed $e) {
             $this->error('Validation failed for admin user');
         }
@@ -83,10 +98,9 @@ class InstallCommand extends Command
     protected function setBoardOptions()
     {
         try {
-            $this->dispatch('admin.options.set', [
-                'board_title' => 'FluxBB 2.0 Test',
-                'board_desc'  => 'Testing the fun.',
-            ]);
+            $options = $this->data->getBoardOptions();
+
+            $this->dispatch('admin.options.set', $options);
         } catch (ValidationFailed $e) {
             $this->error('Validation failed for board options');
         }
