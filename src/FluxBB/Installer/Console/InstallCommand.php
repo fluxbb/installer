@@ -53,7 +53,7 @@ class InstallCommand extends Command
             'prefix'   => $this->ask('Table prefix?'),
         ];
 
-        $result = $this->dispatch('write_configuration', $configuration)->getData();
+        $result = $this->dispatch('write_configuration', $configuration);
 
         $connection = $result['connection'];
         $this->installer->setDatabase($connection);
