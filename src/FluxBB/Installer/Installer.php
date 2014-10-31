@@ -3,8 +3,6 @@
 namespace FluxBB\Installer;
 
 use FluxBB\Core;
-use FluxBB\Models\Group;
-use FluxBB\Models\User;
 use Illuminate\Contracts\Container\Container;
 use Illuminate\Database\ConnectionInterface;
 
@@ -29,20 +27,6 @@ class Installer
     public function setDatabase(ConnectionInterface $database)
     {
         $this->database = $database;
-    }
-
-    public function writeDatabaseConfig(array $configuration)
-    {
-        $config = ['database' => $configuration, 'route_prefix' => ''];
-
-        $confDump = '<?php'."\n\n".'return '.var_export($config, true).';'."\n";
-        $confFile = $this->container->make('path.config').'/fluxbb.php';
-
-        $success = $this->container->make('files')->put($confFile, $confDump);
-
-        if (!$success) {
-            throw new \RuntimeException("Unable to write config file. Please create the file '$confFile' with the following contents:\n\n$config");
-        }
     }
 
     public function createDatabaseTables()
@@ -176,29 +160,6 @@ class Installer
         foreach ($config as $conf_name => $conf_value) {
             $this->database->table('config')->insert(compact('conf_name', 'conf_value'));
         }
-    }
-
-    public function createAdminUser(array $user)
-    {
-        $adminGroup = $this->database->table('groups')->where('id', '=', Group::ADMIN)->first();
-
-        if (is_null($adminGroup)) {
-            throw new \LogicException('Could not find admin group.');
-        }
-
-        $adminUser = new User([
-            'username'			=> $user['username'],
-            'password'			=> $user['password'],
-            'email'				=> $user['email'],
-            'language'			=> $this->container->make('config')['app.locale'],
-            'style'				=> 'Air',
-            'registered'		=> time(),
-            'registration_ip'	=> $user['ip'],
-            'last_visit'		=> time(),
-            'group_id'			=> Group::ADMIN
-        ]);
-
-        $adminUser->save();
     }
 
     public function createDemoForum()
