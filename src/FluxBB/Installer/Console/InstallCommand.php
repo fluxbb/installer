@@ -5,6 +5,7 @@ namespace FluxBB\Installer\Console;
 use FluxBB\Installer\Installer;
 use FluxBB\Console\Command;
 use FluxBB\Server\Exception\ValidationFailed;
+use Illuminate\Contracts\Support\MessageBag;
 use Symfony\Component\Console\Input\InputOption;
 
 class InstallCommand extends Command
@@ -91,7 +92,8 @@ class InstallCommand extends Command
 
             $this->dispatch('handle_registration', $user);
         } catch (ValidationFailed $e) {
-            $this->error('Validation failed for admin user');
+            $this->displayErrors($e->getMessageBag());
+            $this->createAdminUser();
         }
     }
 
@@ -102,7 +104,8 @@ class InstallCommand extends Command
 
             $this->dispatch('admin.options.set', $options);
         } catch (ValidationFailed $e) {
-            $this->error('Validation failed for board options');
+            $this->displayErrors($e->getMessageBag());
+            $this->setBoardOptions();
         }
     }
 
@@ -110,5 +113,14 @@ class InstallCommand extends Command
     {
         $this->installer->createUserGroups();
         $this->installer->createDemoForum();
+    }
+
+    protected function displayErrors(MessageBag $errors)
+    {
+        foreach ($errors->all() as $error) {
+            $this->error($error);
+        }
+
+        $this->info('Please try again');
     }
 }
