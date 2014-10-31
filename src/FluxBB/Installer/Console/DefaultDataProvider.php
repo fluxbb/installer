@@ -7,11 +7,12 @@ class DefaultDataProvider implements DataProviderInterface
     public function getDatabaseConfiguration()
     {
         return [
-            'driver'   => 'mysql',
-            'host'     => 'localhost',
-            'database' => 'homestead',
-            'username' => 'homestead',
-            'password' => 'secret',
+            'driver'                => 'mysql',
+            'host'                  => 'localhost',
+            'database'              => 'homestead',
+            'username'              => 'homestead',
+            'password'              => 'secret',
+            'password_confirmation' => 'secret',
         ];
     }
 

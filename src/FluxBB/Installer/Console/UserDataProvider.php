@@ -26,11 +26,12 @@ class UserDataProvider implements DataProviderInterface
     public function getDatabaseConfiguration()
     {
         return [
-            'driver'   => 'mysql',
-            'host'     => $this->ask('Database host:'),
-            'database' => $this->ask('Database name:'),
-            'username' => $this->ask('Database user:'),
-            'password' => $this->ask('Database password:'),
+            'driver'                => 'mysql',
+            'host'                  => $this->ask('Database host:'),
+            'database'              => $this->ask('Database name:'),
+            'username'              => $this->ask('Database user:'),
+            'password'              => $this->secret('Database password:'),
+            'password_confirmation' => $this->secret('Confirm database password:'),
         ];
     }
 
@@ -38,8 +39,8 @@ class UserDataProvider implements DataProviderInterface
     {
         return [
             'username'              => $this->ask('Admin username:'),
-            'password'              => $this->ask('Admin password:'),
-            'password_confirmation' => $this->ask('Confirm admin password:'),
+            'password'              => $this->secret('Admin password:'),
+            'password_confirmation' => $this->secret('Confirm admin password:'),
             'email'                 => $this->ask('Admin email address:'),
         ];
     }
@@ -57,6 +58,17 @@ class UserDataProvider implements DataProviderInterface
         $helper = $this->helperSet->get('question');
 
         $question = new Question("<question>$question</question> ", $default);
+
+        return $helper->ask($this->input, $this->output, $question);
+    }
+
+    protected function secret($question)
+    {
+        $helper = $this->helperSet->get('question');
+
+        $question = new Question("<question>$question</question> ");
+
+        $question->setHidden(true)->setHiddenFallback(true);
 
         return $helper->ask($this->input, $this->output, $question);
     }

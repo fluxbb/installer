@@ -69,7 +69,7 @@ class InstallCommand extends Command
     protected function configureDatabase()
     {
         $configuration = $this->data->getDatabaseConfiguration();
-        $configuration['prefix'] = $this->ask('Table prefix?');
+        $configuration['prefix'] = $this->ask('Table prefix:');
 
         $result = $this->dispatch('write_configuration', $configuration);
 
