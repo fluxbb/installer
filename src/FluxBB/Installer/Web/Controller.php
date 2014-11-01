@@ -19,7 +19,7 @@ class Controller extends BaseController
     public function index()
     {
         // TODO: Detect where to redirect here, based on state of installation
-        return $this->redirect('install_start');
+        return $this->redirectTo('install_start');
     }
 
     public function start()
@@ -41,9 +41,11 @@ class Controller extends BaseController
             $this->installer->createDatabaseTables();
             $this->installer->createConfig();
 
-            return $this->redirect('install_admin');
+            return $this->redirectTo('install_admin');
         } catch (ValidationFailed $e) {
-            return $this->redirect('install_database');
+            return $this->redirectTo('install_database')
+                        ->withInput()
+                        ->withErrors($e);
         }
     }
 
@@ -62,9 +64,11 @@ class Controller extends BaseController
                 'ip'        => $this->request->getClientIp(),
             ]);
 
-            return $this->redirect('install_config');
+            return $this->redirectTo('install_config');
         } catch (ValidationFailed $e) {
-            return $this->redirect('install_admin');
+            return $this->redirectTo('install_admin')
+                        ->withInput()
+                        ->withErrors($e);
         }
     }
 
@@ -78,9 +82,11 @@ class Controller extends BaseController
         try {
             $this->execute('admin.options.set'); // TODO: Make sure _ONLY_ title and description are set?
 
-            return $this->redirect('install_run');
+            return $this->redirectTo('install_run');
         } catch (ValidationFailed $e) {
-            return $this->redirect('install_config');
+            return $this->redirectTo('install_config')
+                        ->withInput()
+                        ->withErrors($e);
         }
     }
 
@@ -95,7 +101,7 @@ class Controller extends BaseController
         $this->installer->createUserGroups();
         $this->installer->createDemoForum();
 
-        return $this->redirect('install_success');
+        return $this->redirectTo('install_success');
         // TODO: Dump errors
     }
 
