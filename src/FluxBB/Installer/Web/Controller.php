@@ -43,9 +43,7 @@ class Controller extends BaseController
 
             return $this->redirectTo('install_admin');
         } catch (ValidationFailed $e) {
-            return $this->redirectTo('install_database')
-                        ->withInput()
-                        ->withErrors($e);
+            return $this->errorRedirectTo('install_database', $e);
         }
     }
 
@@ -66,9 +64,7 @@ class Controller extends BaseController
 
             return $this->redirectTo('install_config');
         } catch (ValidationFailed $e) {
-            return $this->redirectTo('install_admin')
-                        ->withInput()
-                        ->withErrors($e);
+            return $this->errorRedirectTo('install_admin', $e);
         }
     }
 
@@ -84,9 +80,7 @@ class Controller extends BaseController
 
             return $this->redirectTo('install_run');
         } catch (ValidationFailed $e) {
-            return $this->redirectTo('install_config')
-                        ->withInput()
-                        ->withErrors($e);
+            return $this->errorRedirectTo('install_config', $e);
         }
     }
 
