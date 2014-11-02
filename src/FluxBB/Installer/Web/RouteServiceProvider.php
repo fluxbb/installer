@@ -1,8 +1,7 @@
 <?php
 
-namespace FluxBB\Installer\Providers;
+namespace FluxBB\Installer\Web;
 
-use FluxBB\Server\Server;
 use FluxBB\Web\Router;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Support\ServiceProvider;

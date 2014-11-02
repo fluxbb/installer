@@ -1,6 +1,6 @@
 <?php
 
-namespace FluxBB\Installer\Providers;
+namespace FluxBB\Installer;
 
 use FluxBB\Server\Server;
 use Illuminate\Support\ServiceProvider;
