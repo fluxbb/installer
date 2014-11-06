@@ -11,9 +11,9 @@
 
 		<title>Install your FluxBB Forum</title>
 
-		{{ $asset('bootstrap', '/vendor/fluxbb/installer/public/css/bootstrap.min.css') }}
-		{{ $asset('style', '/vendor/fluxbb/installer/public/css/style.css') }}
-		{{ $asset('entypo', '/vendor/fluxbb/installer/public/css/entypo.css') }}
+		{{ $load('bootstrap', 'vendor/fluxbb/installer/public/css/bootstrap.min.css') }}
+		{{ $load('style', 'vendor/fluxbb/installer/public/css/style.css') }}
+		{{ $load('entypo', 'vendor/fluxbb/installer/public/css/entypo.css') }}
 
 		<link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400|Telex" rel="stylesheet" type="text/css">
 
