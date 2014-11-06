@@ -4,7 +4,7 @@
 
 		<div id="brdinstall" class="installer">
 
-			<img src="/public/packages/fluxbb/installer/img/logo_320.png" alt="FluxBB2" />
+			<img src="/vendor/fluxbb/installer/public/img/logo_320.png" alt="FluxBB2" />
 
 			<div id="instx" class="box clearfix">
 
@@ -67,11 +67,11 @@
 									<label for="" class="col-md-4 control-label">Default style<span>Look 'n Feel</span></label>
 									<div class="col-md-8">
 										<div class="col-md-6 text-center">
-											<img class="img-thumbnail" src="/public/packages/fluxbb/installer/img/RD_demo.png" alt="" width="128" height="" />
+											<img class="img-thumbnail" src="/vendor/fluxbb/installer/public/img/RD_demo.png" alt="" width="128" height="" />
 											<input type="radio" id="default_style" name="default_style" value="FluxBB2" checked />
 										</div>
 										<div class="col-md-6 text-center">
-											<img class="img-thumbnail" src="/public/packages/fluxbb/installer/img/Air_demo.png" alt="" width="128" height="" />
+											<img class="img-thumbnail" src="/vendor/fluxbb/installer/public/img/Air_demo.png" alt="" width="128" height="" />
 											<input type="radio" id="default_style" name="default_style" value="Air" />
 										</div>
 									</div>

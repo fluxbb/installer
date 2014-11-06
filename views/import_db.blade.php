@@ -5,7 +5,7 @@
 
 		<div id="brdimport" class="installer">
 
-			<img src="/public/packages/fluxbb/installer/img/logo_320.png" alt="FluxBB2" />
+			<img src="/vendor/fluxbb/installer/public/img/logo_320.png" alt="FluxBB2" />
 
 			<div id="instx" class="box clearfix">
 
