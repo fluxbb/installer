@@ -11,11 +11,13 @@
 
 		<title>Install your FluxBB Forum</title>
 
-		<link rel="stylesheet" type="text/css" href="/public/packages/fluxbb/installer/css/bootstrap.min.css" />
-		<link rel="stylesheet" type="text/css" href="/public/packages/fluxbb/installer/css/style.css" />
-		<link rel="stylesheet" type="text/css" href="/public/packages/fluxbb/installer/css/entypo.css" />
+		{{ $asset('bootstrap', '/vendor/fluxbb/installer/public/css/bootstrap.min.css') }}
+		{{ $asset('style', '/vendor/fluxbb/installer/public/css/style.css') }}
+		{{ $asset('entypo', '/vendor/fluxbb/installer/public/css/entypo.css') }}
 
 		<link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400|Telex" rel="stylesheet" type="text/css">
+
+		{!! $assets() !!}
 
 	</head>
 
