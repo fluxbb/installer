@@ -32,20 +32,16 @@ class Installer
     public function createDatabaseTables()
     {
         $migrationClasses = [
-            'FluxBB\Migrations\Install\Bans',
             'FluxBB\Migrations\Install\Categories',
             'FluxBB\Migrations\Install\Config',
             'FluxBB\Migrations\Install\Conversations',
             'FluxBB\Migrations\Install\ForumPerms',
             'FluxBB\Migrations\Install\ForumSubscriptions',
-            'FluxBB\Migrations\Install\Forums',
             'FluxBB\Migrations\Install\Groups',
             'FluxBB\Migrations\Install\GroupPermissions',
             'FluxBB\Migrations\Install\Posts',
-            'FluxBB\Migrations\Install\Reports',
             'FluxBB\Migrations\Install\Sessions',
             'FluxBB\Migrations\Install\TopicSubscriptions',
-            'FluxBB\Migrations\Install\Topics',
             'FluxBB\Migrations\Install\Users',
         ];
 
