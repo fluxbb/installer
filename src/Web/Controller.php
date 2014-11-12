@@ -55,11 +55,10 @@ class Controller extends BaseController
     public function postAdmin()
     {
         try {
-            $this->execute('handle_registration', [
+            $this->execute('create_admin_user', [
                 'username'  => $this->getInput('username'),
                 'password'  => $this->getInput('password'),
                 'email'     => $this->getInput('email'),
-                'ip'        => $this->request->getClientIp(),
             ]);
 
             return $this->redirectTo('install_config');
