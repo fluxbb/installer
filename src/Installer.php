@@ -30,25 +30,6 @@ class Installer
         $this->container->instance('Illuminate\Database\ConnectionInterface', $database);
     }
 
-    public function createUserGroups()
-    {
-        // Insert the three preset groups
-        $this->database->table('groups')->insert([
-            'id'	=> 1,
-            'title'	=> trans('seed_data.administrators'),
-        ]);
-
-        $this->database->table('groups')->insert([
-            'id'	=> 2,
-            'title'	=> trans('seed_data.moderators'),
-        ]);
-
-        $this->database->table('groups')->insert([
-            'id'	=> 4,
-            'title'	=> trans('seed_data.members'),
-        ]);
-    }
-
     public function createConfig()
     {
         // Enable/disable avatars depending on file_uploads setting in PHP configuration

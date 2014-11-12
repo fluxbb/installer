@@ -91,7 +91,7 @@ class Controller extends BaseController
     public function postRun()
     {
         $this->installer->setDatabase($this->getConnection());
-        $this->installer->createUserGroups();
+        $this->execute('create_groups');
         $this->installer->createDemoForum();
 
         return $this->redirectTo('install_success');

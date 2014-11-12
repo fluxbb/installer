@@ -18,6 +18,7 @@ class InstallerServiceProvider extends ServiceProvider
             $server->registerAction('write_configuration', 'FluxBB\Installer\WriteConfiguration');
             $server->registerAction('create_tables', 'FluxBB\Installer\CreateTables');
             $server->registerAction('create_admin_user', 'FluxBB\Installer\CreateAdminUser');
+            $server->registerAction('create_groups', 'FluxBB\Installer\CreateUserGroups');
 
             return $server;
         });

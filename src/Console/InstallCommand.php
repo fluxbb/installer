@@ -110,7 +110,7 @@ class InstallCommand extends Command
 
     protected function createDemoContent()
     {
-        $this->installer->createUserGroups();
+        $this->dispatch('create_groups');
         $this->installer->createDemoForum();
     }
 
