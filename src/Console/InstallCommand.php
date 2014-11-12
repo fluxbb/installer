@@ -80,7 +80,7 @@ class InstallCommand extends Command
 
     protected function createTablesAndConfig()
     {
-        $this->installer->createDatabaseTables();
+        $this->dispatch('create_tables');
         $this->installer->createConfig();
     }
 

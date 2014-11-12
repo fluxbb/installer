@@ -38,7 +38,7 @@ class Controller extends BaseController
             $this->execute('write_configuration');
 
             $this->installer->setDatabase($this->getConnection());
-            $this->installer->createDatabaseTables();
+            $this->execute('create_tables');
             $this->installer->createConfig();
 
             return $this->redirectTo('install_admin');

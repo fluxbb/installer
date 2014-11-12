@@ -30,29 +30,6 @@ class Installer
         $this->container->instance('Illuminate\Database\ConnectionInterface', $database);
     }
 
-    public function createDatabaseTables()
-    {
-        $migrationClasses = [
-            'FluxBB\Migrations\Install\Categories',
-            'FluxBB\Migrations\Install\Config',
-            'FluxBB\Migrations\Install\Conversations',
-            'FluxBB\Migrations\Install\ForumPerms',
-            'FluxBB\Migrations\Install\ForumSubscriptions',
-            'FluxBB\Migrations\Install\Groups',
-            'FluxBB\Migrations\Install\GroupPermissions',
-            'FluxBB\Migrations\Install\Posts',
-            'FluxBB\Migrations\Install\Sessions',
-            'FluxBB\Migrations\Install\TopicSubscriptions',
-            'FluxBB\Migrations\Install\Users',
-        ];
-
-        $schema = $this->database->getSchemaBuilder();
-        foreach ($migrationClasses as $class) {
-            $instance = new $class($schema);
-            $instance->up();
-        }
-    }
-
     public function createUserGroups()
     {
         // Insert the three preset groups

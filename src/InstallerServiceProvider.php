@@ -16,6 +16,7 @@ class InstallerServiceProvider extends ServiceProvider
     {
         $this->app->extend('fluxbb.server.core', function (Server $server) {
             $server->registerAction('write_configuration', 'FluxBB\Installer\WriteConfiguration');
+            $server->registerAction('create_tables', 'FluxBB\Installer\CreateTables');
             $server->registerAction('create_admin_user', 'FluxBB\Installer\CreateAdminUser');
 
             return $server;
