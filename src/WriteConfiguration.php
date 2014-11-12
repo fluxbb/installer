@@ -7,6 +7,7 @@ use FluxBB\Server\Exception\Exception;
 use Illuminate\Contracts\Container\Container;
 use Illuminate\Contracts\Filesystem\Filesystem;
 use Illuminate\Database\Connectors\ConnectionFactory;
+use PDO;
 
 class WriteConfiguration extends Action
 {
@@ -52,6 +53,7 @@ class WriteConfiguration extends Action
         }
 
         $connection = $this->factory->make($config['database'], 'fluxbb');
+        $connection->setFetchMode(PDO::FETCH_CLASS);
         $this->container->instance('Illuminate\Database\ConnectionInterface', $connection);
 
         return [
