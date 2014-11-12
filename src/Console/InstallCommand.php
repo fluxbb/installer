@@ -2,7 +2,6 @@
 
 namespace FluxBB\Installer\Console;
 
-use FluxBB\Installer\Installer;
 use FluxBB\Console\Command;
 use FluxBB\Server\Exception\ValidationFailed;
 use Illuminate\Contracts\Support\MessageBag;
@@ -15,22 +14,10 @@ class InstallCommand extends Command
     protected $description = 'Install FluxBB';
 
     /**
-     * @var \FluxBB\Installer\Installer
-     */
-    protected $installer;
-
-    /**
      * @var \FluxBB\Installer\Console\DataProviderInterface
      */
     protected $data;
 
-
-    public function __construct(Installer $installer)
-    {
-        parent::__construct();
-
-        $this->installer = $installer;
-    }
 
     protected function getOptions()
     {
@@ -72,10 +59,7 @@ class InstallCommand extends Command
         $configuration = $this->data->getDatabaseConfiguration();
         $configuration['prefix'] = $this->ask('Table prefix:');
 
-        $result = $this->dispatch('write_configuration', $configuration);
-
-        $connection = $result['connection'];
-        $this->installer->setDatabase($connection);
+        $this->dispatch('write_configuration', $configuration);
     }
 
     protected function createTablesAndConfig()
@@ -111,7 +95,6 @@ class InstallCommand extends Command
     protected function createDemoContent()
     {
         $this->dispatch('create_groups');
-        $this->installer->createDemoForum();
     }
 
     protected function displayErrors(MessageBag $errors)

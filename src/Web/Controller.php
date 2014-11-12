@@ -2,20 +2,11 @@
 
 namespace FluxBB\Installer\Web;
 
-use FluxBB\Installer\Installer;
 use FluxBB\Server\Exception\ValidationFailed;
 use FluxBB\Web\Controller as BaseController;
 
 class Controller extends BaseController
 {
-    protected $installer;
-
-
-    public function __construct(Installer $installer)
-    {
-        $this->installer = $installer;
-    }
-
     public function index()
     {
         // TODO: Detect where to redirect here, based on state of installation
@@ -37,7 +28,6 @@ class Controller extends BaseController
         try {
             $this->execute('write_configuration');
 
-            $this->installer->setDatabase($this->getConnection());
             $this->execute('create_tables');
             $this->execute('create_config');
 
@@ -90,9 +80,7 @@ class Controller extends BaseController
 
     public function postRun()
     {
-        $this->installer->setDatabase($this->getConnection());
         $this->execute('create_groups');
-        $this->installer->createDemoForum();
 
         return $this->redirectTo('install_success');
         // TODO: Dump errors
@@ -101,13 +89,5 @@ class Controller extends BaseController
     public function success()
     {
         return $this->view('fluxbb_installer::success');
-    }
-
-    /**
-     * @return \Illuminate\Database\ConnectionInterface
-     */
-    protected function getConnection()
-    {
-        return app()->make('Illuminate\Database\ConnectionInterface');
     }
 }

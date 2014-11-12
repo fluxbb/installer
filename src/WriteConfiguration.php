@@ -51,8 +51,11 @@ class WriteConfiguration extends Action
             );
         }
 
+        $connection = $this->factory->make($config['database'], 'fluxbb');
+        $this->container->instance('Illuminate\Database\ConnectionInterface', $connection);
+
         return [
-            'connection' => $this->factory->make($config['database'], 'fluxbb'),
+            'connection' => $connection,
         ];
     }
 }
