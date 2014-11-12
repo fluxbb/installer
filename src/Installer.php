@@ -27,6 +27,7 @@ class Installer
     public function setDatabase(ConnectionInterface $database)
     {
         $this->database = $database;
+        $this->container->instance('Illuminate\Database\ConnectionInterface', $database);
     }
 
     public function createDatabaseTables()
