@@ -88,9 +88,8 @@ class InstallCommand extends Command
     {
         try {
             $user = $this->data->getAdminUser();
-            $user['ip'] = '127.0.0.1';
 
-            $this->dispatch('handle_registration', $user);
+            $this->dispatch('create_admin_user', $user);
         } catch (ValidationFailed $e) {
             $this->displayErrors($e->getMessageBag());
             $this->createAdminUser();
