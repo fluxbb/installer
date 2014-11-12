@@ -81,7 +81,7 @@ class InstallCommand extends Command
     protected function createTablesAndConfig()
     {
         $this->dispatch('create_tables');
-        $this->installer->createConfig();
+        $this->dispatch('create_config');
     }
 
     protected function createAdminUser()
