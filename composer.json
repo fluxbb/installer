@@ -1,24 +1,24 @@
 {
-	"name": "fluxbb/installer",
-	"type": "library",
-	"description": "The FluxBB forum installer",
-	"keywords": ["forum"],
-	"homepage": "http://fluxbb.org",
-	"license": "GPL-3.0+",
-	"authors": [
-		{
-			"name": "Franz Liedke",
-			"email": "franz@fluxbb.org",
-			"homepage": "http://www.develophp.org",
-			"role": "Lead Developer"
-		}
-	],
-	"support": {
-		"email": "devs@fluxbb.org",
-		"irc": "irc://irc.freenode.org/fluxbb"
-	},
-	"require": {
-		"php": ">=5.4.0",
+    "name": "fluxbb/installer",
+    "type": "library",
+    "description": "The FluxBB forum installer",
+    "keywords": ["forum"],
+    "homepage": "http://fluxbb.org",
+    "license": "GPL-3.0+",
+    "authors": [
+        {
+            "name": "Franz Liedke",
+            "email": "franz@fluxbb.org",
+            "homepage": "http://www.develophp.org",
+            "role": "Lead Developer"
+        }
+    ],
+    "support": {
+        "email": "devs@fluxbb.org",
+        "irc": "irc://irc.freenode.org/fluxbb"
+    },
+    "require": {
+        "php": ">=5.4.0",
         "fluxbb/core": "@dev",
         "illuminate/support": "5.0.*@dev",
         "illuminate/contracts": "5.0.*@dev",
@@ -28,10 +28,10 @@
     "require-dev": {
         "squizlabs/php_codesniffer": "1.*"
     },
-	"autoload": {
-		"psr-4": {
-			"FluxBB\\Installer\\": "src"
-		}
-	},
-	"minimum-stability": "dev"
+    "autoload": {
+        "psr-4": {
+            "FluxBB\\Installer\\": "src"
+        }
+    },
+    "minimum-stability": "dev"
 }
