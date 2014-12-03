@@ -26,10 +26,10 @@ class Controller extends BaseController
     public function postDatabase()
     {
         try {
-            $this->execute('write_configuration');
+            $this->execute('write.configuration');
 
-            $this->execute('create_tables');
-            $this->execute('create_config');
+            $this->execute('create.tables');
+            $this->execute('seed.config');
 
             return $this->redirectTo('install_admin');
         } catch (ValidationFailed $e) {
@@ -47,7 +47,7 @@ class Controller extends BaseController
     public function postAdmin()
     {
         try {
-            $this->execute('create_admin_user', [
+            $this->execute('seed.admin', [
                 'username'  => $this->getInput('username'),
                 'password'  => $this->getInput('password'),
                 'email'     => $this->getInput('email'),
@@ -69,7 +69,7 @@ class Controller extends BaseController
     public function postConfig()
     {
         try {
-            $this->execute('admin.options.set'); // TODO: Make sure _ONLY_ title and description are set?
+            $this->execute('set.settings'); // TODO: Make sure _ONLY_ title and description are set?
 
             return $this->redirectTo('install_run');
         } catch (ValidationFailed $e) {
@@ -86,7 +86,7 @@ class Controller extends BaseController
 
     public function postRun()
     {
-        $this->execute('create_groups');
+        $this->execute('seed.groups');
 
         return $this->redirectTo('install_success');
         // TODO: Dump errors

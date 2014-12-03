@@ -59,13 +59,13 @@ class InstallCommand extends Command
         $configuration = $this->data->getDatabaseConfiguration();
         $configuration['prefix'] = $this->ask('Table prefix:');
 
-        $this->dispatch('write_configuration', $configuration);
+        $this->dispatch('write.config', $configuration);
     }
 
     protected function createTablesAndConfig()
     {
-        $this->dispatch('create_tables');
-        $this->dispatch('create_config');
+        $this->dispatch('create.tables');
+        $this->dispatch('seed.config');
     }
 
     protected function createAdminUser()
@@ -73,7 +73,7 @@ class InstallCommand extends Command
         try {
             $user = $this->data->getAdminUser();
 
-            $this->dispatch('create_admin_user', $user);
+            $this->dispatch('seed.admin', $user);
         } catch (ValidationFailed $e) {
             $this->displayErrors($e->getMessageBag());
             $this->createAdminUser();
@@ -85,7 +85,7 @@ class InstallCommand extends Command
         try {
             $options = $this->data->getBoardOptions();
 
-            $this->dispatch('admin.options.set', $options);
+            $this->dispatch('set.settings', $options);
         } catch (ValidationFailed $e) {
             $this->displayErrors($e->getMessageBag());
             $this->setBoardOptions();
@@ -94,7 +94,7 @@ class InstallCommand extends Command
 
     protected function createDemoContent()
     {
-        $this->dispatch('create_groups');
+        $this->dispatch('seed.groups');
     }
 
     protected function displayErrors(MessageBag $errors)

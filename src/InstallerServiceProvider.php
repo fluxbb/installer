@@ -15,11 +15,11 @@ class InstallerServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->extend('fluxbb.server.core', function (Server $server) {
-            $server->registerAction('write_configuration', 'FluxBB\Installer\WriteConfiguration');
-            $server->registerAction('create_tables', 'FluxBB\Installer\CreateTables');
-            $server->registerAction('create_config', 'FluxBB\Installer\CreateConfig');
-            $server->registerAction('create_admin_user', 'FluxBB\Installer\CreateAdminUser');
-            $server->registerAction('create_groups', 'FluxBB\Installer\CreateUserGroups');
+            $server->registerAction('write.config', 'FluxBB\Installer\WriteConfiguration');
+            $server->registerAction('create.tables', 'FluxBB\Installer\CreateTables');
+            $server->registerAction('seed.config', 'FluxBB\Installer\CreateConfig');
+            $server->registerAction('seed.admin', 'FluxBB\Installer\CreateAdminUser');
+            $server->registerAction('seed.groups', 'FluxBB\Installer\CreateUserGroups');
 
             return $server;
         });
