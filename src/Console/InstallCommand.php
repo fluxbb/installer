@@ -26,7 +26,7 @@ class InstallCommand extends Command
         ];
     }
 
-    protected function fire()
+    public function fire()
     {
         $this->init();
 
